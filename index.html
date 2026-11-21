@@ -212,6 +212,103 @@
       font-size: 26px;
       font-weight: bold;
     }
+    .productCard {
+  margin-top: 20px;
+}
+
+.productMaker {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.productName {
+  margin-top: 5px;
+  font-size: 25px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.productCode {
+  margin-top: 7px;
+  margin-bottom: 18px;
+
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.priceCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 10px;
+  padding: 17px;
+
+  border: 1px solid #334155;
+  border-radius: 15px;
+
+  background: #1e293b;
+}
+
+.priceLabel {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.priceValue {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.premiumCard {
+  border-color: #f59e0b;
+  background: #422006;
+}
+
+.premiumCard .priceLabel,
+.premiumCard .priceValue {
+  color: #fbbf24;
+}
+
+.lotCard {
+  margin-top: 12px;
+  padding: 14px;
+
+  border: 1px solid #334155;
+  border-radius: 12px;
+
+  background: #111827;
+  color: #cbd5e1;
+
+  font-size: 14px;
+}
+
+.searchingCard {
+  margin-top: 18px;
+  padding: 16px;
+
+  border-radius: 12px;
+
+  background: #1e293b;
+  color: #cbd5e1;
+
+  text-align: center;
+}
+
+.errorCard {
+  margin-top: 18px;
+  padding: 16px;
+
+  border: 1px solid #ef4444;
+  border-radius: 12px;
+
+  background: #450a0a;
+  color: #fecaca;
+
+  line-height: 1.7;
+}
+
   </style>
 </head>
 
@@ -688,9 +785,354 @@
 
 
   function onScanSuccess(
-    decodedText,
-    decodedResult
+  decodedText,
+  decodedResult
+) {
+
+  if (scanLocked) {
+    return;
+  }
+
+
+  const jan =
+    String(decodedText)
+      .replace(/\D/g, "")
+      .trim();
+
+
+  if (!jan) {
+    return;
+  }
+
+
+  scanLocked = true;
+
+
+  if (navigator.vibrate) {
+    navigator.vibrate(100);
+  }
+
+
+  document
+    .getElementById("message")
+    .innerText =
+    "JANコードを読み取りました：" +
+    jan;
+
+
+  searchProduct(jan);
+
+
+  setTimeout(
+    function() {
+
+      scanLocked = false;
+
+    },
+    2500
+  );
+
+}
+  function searchProduct(jan) {
+
+  const normalizedJan =
+    String(jan)
+      .replace(/\D/g, "")
+      .trim();
+
+
+  if (!normalizedJan) {
+
+    showSearchError(
+      "JANコードを確認できませんでした。"
+    );
+
+    return;
+
+  }
+
+
+  document
+    .getElementById("result")
+    .innerHTML = `
+
+      <div class="searchingCard">
+
+        商品情報を検索しています...
+
+        <br>
+
+        JAN：${escapeHtml(normalizedJan)}
+
+      </div>
+
+    `;
+
+
+  const callbackName =
+    "productCallback_" +
+    Date.now();
+
+
+  const script =
+    document.createElement("script");
+
+
+  const timeoutId =
+    setTimeout(
+      function() {
+
+        cleanupJsonp(
+          callbackName,
+          script
+        );
+
+
+        showSearchError(
+          "商品検索がタイムアウトしました。通信状態を確認して、もう一度読み取ってください。"
+        );
+
+      },
+      12000
+    );
+function cleanupJsonp(
+  callbackName,
+  script
+) {
+
+  try {
+
+    delete window[callbackName];
+
+  } catch (error) {
+
+    window[callbackName] =
+      undefined;
+
+  }
+
+
+  if (
+    script &&
+    script.parentNode
   ) {
+
+    script.parentNode
+      .removeChild(script);
+
+  }
+
+}
+    function showProduct(data) {
+
+  if (!data) {
+
+    showSearchError(
+      "商品情報を取得できませんでした。"
+    );
+
+    return;
+
+  }
+
+
+  if (data.error) {
+
+    showSearchError(
+      data.message ||
+      "商品検索中にエラーが発生しました。"
+    );
+
+    return;
+
+  }
+
+
+  if (!data.found) {
+
+    document
+      .getElementById("result")
+      .innerHTML = `
+
+        <div class="errorCard">
+
+          商品マスターに登録されていません。
+
+          <br><br>
+
+          JAN：
+          ${escapeHtml(data.jan || "")}
+
+        </div>
+
+      `;
+
+
+    document
+      .getElementById("message")
+      .innerText =
+      "該当する商品が見つかりませんでした。";
+
+
+    return;
+
+  }
+
+
+  const premiumPrice =
+    data.premiumPrice
+      ? formatPrice(data.premiumPrice)
+      : "未設定";
+
+
+  document
+    .getElementById("result")
+    .innerHTML = `
+
+      <div class="productCard">
+
+        <div class="productMaker">
+
+          ${escapeHtml(data.maker || "")}
+
+        </div>
+
+
+        <div class="productName">
+
+          ${escapeHtml(data.name || "")}
+
+        </div>
+
+
+        <div class="productCode">
+
+          品番：
+          ${escapeHtml(data.productCode || "-")}
+
+          <br>
+
+          JAN：
+          ${escapeHtml(data.jan || "-")}
+
+        </div>
+
+
+        <div class="priceCard">
+
+          <div class="priceLabel">
+            上代
+          </div>
+
+          <div class="priceValue">
+
+            ${formatPrice(data.retailPrice)}
+
+          </div>
+
+        </div>
+
+
+        <div class="priceCard">
+
+          <div class="priceLabel">
+            通常下代
+          </div>
+
+          <div class="priceValue">
+
+            ${formatPrice(data.normalPrice)}
+
+          </div>
+
+        </div>
+
+
+        <div class="priceCard premiumCard">
+
+          <div class="priceLabel">
+            ★ プレミアム会員価格
+          </div>
+
+          <div class="priceValue">
+
+            ${premiumPrice}
+
+          </div>
+
+        </div>
+
+
+        <div class="lotCard">
+
+          ロット：
+          ${escapeHtml(data.lot || "-")}
+
+        </div>
+
+      </div>
+
+    `;
+
+
+  document
+    .getElementById("message")
+    .innerText =
+    "商品が見つかりました。";
+
+}
+
+  window[callbackName] =
+    function(data) {
+
+      clearTimeout(timeoutId);
+
+
+      cleanupJsonp(
+        callbackName,
+        script
+      );
+
+
+      showProduct(data);
+
+    };
+
+
+  script.onerror =
+    function() {
+
+      clearTimeout(timeoutId);
+
+
+      cleanupJsonp(
+        callbackName,
+        script
+      );
+
+
+      showSearchError(
+        "商品検索APIへ接続できませんでした。"
+      );
+
+    };
+
+
+  script.src =
+    GAS_API_URL +
+    "?jan=" +
+    encodeURIComponent(normalizedJan) +
+    "&callback=" +
+    encodeURIComponent(callbackName) +
+    "&t=" +
+    Date.now();
+
+
+  document
+    .body
+    .appendChild(script);
+
+}
 
     if (scanLocked) {
       return;
