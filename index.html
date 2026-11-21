@@ -11,9 +11,7 @@
 
   <title>商品価格検索</title>
 
-  <script
-    src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
-  </script>
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
   <style>
     * {
@@ -23,13 +21,11 @@
     body {
       margin: 0;
       padding: 20px;
-
       font-family:
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
-
       background: #0f172a;
       color: white;
     }
@@ -51,20 +47,19 @@
       line-height: 1.6;
     }
 
+    button {
+      cursor: pointer;
+    }
+
     .cameraButton {
       width: 100%;
       padding: 17px;
-
       border: none;
       border-radius: 14px;
-
       background: #2563eb;
       color: white;
-
       font-size: 18px;
       font-weight: bold;
-
-      cursor: pointer;
     }
 
     .cameraButton:disabled {
@@ -73,15 +68,11 @@
 
     #reader {
       display: none;
-
       width: 100%;
       margin-top: 15px;
-
       overflow: hidden;
-
       border: 2px solid #10b981;
       border-radius: 16px;
-
       background: black;
     }
 
@@ -91,12 +82,9 @@
 
     #message {
       margin-top: 15px;
-
       color: #cbd5e1;
-
       font-size: 14px;
       line-height: 1.7;
-
       white-space: pre-wrap;
     }
 
@@ -104,28 +92,20 @@
       width: 100%;
       padding: 13px;
       margin-top: 12px;
-
       border: 1px solid #475569;
       border-radius: 12px;
-
       background: #1e293b;
       color: white;
-
       font-size: 15px;
       font-weight: bold;
-
-      cursor: pointer;
     }
 
     #cameraSettings {
       display: none;
-
       margin-top: 12px;
       padding: 16px;
-
       border: 1px solid #334155;
       border-radius: 16px;
-
       background: #111827;
     }
 
@@ -138,13 +118,10 @@
     #cameraSelect {
       width: 100%;
       padding: 14px;
-
       border: 1px solid #475569;
       border-radius: 10px;
-
       background: #1e293b;
       color: white;
-
       font-size: 16px;
     }
 
@@ -152,163 +129,162 @@
       width: 100%;
       padding: 14px;
       margin-top: 12px;
-
       border: none;
       border-radius: 10px;
-
       background: #10b981;
       color: #052e25;
-
       font-size: 16px;
       font-weight: bold;
-
-      cursor: pointer;
     }
 
     .resetButton {
       width: 100%;
       padding: 13px;
       margin-top: 10px;
-
       border: 1px solid #64748b;
       border-radius: 10px;
-
       background: transparent;
       color: #cbd5e1;
-
       font-size: 14px;
       font-weight: bold;
-
-      cursor: pointer;
     }
 
     .settingsHelp {
       margin-top: 13px;
-
       color: #94a3b8;
-
       font-size: 13px;
       line-height: 1.7;
     }
 
-    .success {
+    .manualArea {
       margin-top: 18px;
-      padding: 17px;
-
-      border: 1px solid #10b981;
-      border-radius: 14px;
-
-      background: #064e3b;
+      padding: 16px;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      background: #111827;
     }
 
-    .janLabel {
-      color: #a7f3d0;
-      font-size: 13px;
+    .manualTitle {
+      margin-bottom: 10px;
+      color: #cbd5e1;
+      font-size: 14px;
+      font-weight: bold;
     }
 
-    .jan {
+    .manualRow {
+      display: flex;
+      gap: 8px;
+    }
+
+    #janInput {
+      min-width: 0;
+      flex: 1;
+      padding: 14px;
+      border: 1px solid #475569;
+      border-radius: 10px;
+      outline: none;
+      background: #1e293b;
+      color: white;
+      font-size: 16px;
+    }
+
+    #janInput:focus {
+      border-color: #10b981;
+    }
+
+    .searchButton {
+      padding: 14px 18px;
+      border: none;
+      border-radius: 10px;
+      background: #10b981;
+      color: #052e25;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .productCard {
+      margin-top: 20px;
+    }
+
+    .productMaker {
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    .productName {
       margin-top: 5px;
+      font-size: 25px;
+      font-weight: bold;
+      line-height: 1.4;
+    }
 
+    .productCode {
+      margin-top: 7px;
+      margin-bottom: 18px;
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .priceCard {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding: 17px;
+      border: 1px solid #334155;
+      border-radius: 15px;
+      background: #1e293b;
+    }
+
+    .priceLabel {
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    .priceValue {
       font-size: 26px;
       font-weight: bold;
     }
-    .productCard {
-  margin-top: 20px;
-}
 
-.productMaker {
-  color: #94a3b8;
-  font-size: 14px;
-}
+    .premiumCard {
+      border-color: #f59e0b;
+      background: #422006;
+    }
 
-.productName {
-  margin-top: 5px;
-  font-size: 25px;
-  font-weight: bold;
-  line-height: 1.4;
-}
+    .premiumCard .priceLabel,
+    .premiumCard .priceValue {
+      color: #fbbf24;
+    }
 
-.productCode {
-  margin-top: 7px;
-  margin-bottom: 18px;
+    .lotCard {
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      background: #111827;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
 
-  color: #64748b;
-  font-size: 13px;
-  line-height: 1.6;
-}
+    .searchingCard {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 12px;
+      background: #1e293b;
+      color: #cbd5e1;
+      text-align: center;
+    }
 
-.priceCard {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  margin-top: 10px;
-  padding: 17px;
-
-  border: 1px solid #334155;
-  border-radius: 15px;
-
-  background: #1e293b;
-}
-
-.priceLabel {
-  color: #94a3b8;
-  font-size: 14px;
-}
-
-.priceValue {
-  font-size: 26px;
-  font-weight: bold;
-}
-
-.premiumCard {
-  border-color: #f59e0b;
-  background: #422006;
-}
-
-.premiumCard .priceLabel,
-.premiumCard .priceValue {
-  color: #fbbf24;
-}
-
-.lotCard {
-  margin-top: 12px;
-  padding: 14px;
-
-  border: 1px solid #334155;
-  border-radius: 12px;
-
-  background: #111827;
-  color: #cbd5e1;
-
-  font-size: 14px;
-}
-
-.searchingCard {
-  margin-top: 18px;
-  padding: 16px;
-
-  border-radius: 12px;
-
-  background: #1e293b;
-  color: #cbd5e1;
-
-  text-align: center;
-}
-
-.errorCard {
-  margin-top: 18px;
-  padding: 16px;
-
-  border: 1px solid #ef4444;
-  border-radius: 12px;
-
-  background: #450a0a;
-  color: #fecaca;
-
-  line-height: 1.7;
-}
-
+    .errorCard {
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px solid #ef4444;
+      border-radius: 12px;
+      background: #450a0a;
+      color: #fecaca;
+      line-height: 1.7;
+    }
   </style>
 </head>
 
@@ -350,9 +326,11 @@
     </div>
 
     <select id="cameraSelect">
+
       <option value="">
         カメラを起動すると候補が表示されます
       </option>
+
     </select>
 
     <button
@@ -376,13 +354,41 @@
 
   </div>
 
+  <div class="manualArea">
+
+    <div class="manualTitle">
+      カメラで読めない場合はJANコードを入力
+    </div>
+
+    <div class="manualRow">
+
+      <input
+        id="janInput"
+        type="text"
+        inputmode="numeric"
+        autocomplete="off"
+        placeholder="JANコードを入力"
+      >
+
+      <button
+        class="searchButton"
+        onclick="searchFromInput()"
+      >
+        検索
+      </button>
+
+    </div>
+
+  </div>
+
   <div id="result"></div>
 
 </div>
 
 <script>
   const GAS_API_URL =
-  "https://script.google.com/macros/s/AKfycbwLlT9NxW6-wJDakrSP8wPhV29UFXcDbWaFEXNAEPv0lkc8cmC15ecQd0go0G1IkYGL/exec";
+    "https://script.google.com/macros/s/AKfycbwLlT9NxW6-wJDakrSP8wPhV29UFXcDbWaFEXNAEPv0lkc8cmC15ecQd0go0G1IkYGL/exec";
+
   const CAMERA_STORAGE_KEY =
     "productPricePreferredCamera";
 
@@ -390,14 +396,16 @@
   let cameraRunning = false;
   let scanLocked = false;
   let cameras = [];
-  let activeCameraId = "";
 
 
   async function toggleCamera() {
 
     if (cameraRunning) {
+
       await stopCamera();
+
       return;
+
     }
 
     await startCamera();
@@ -405,9 +413,7 @@
   }
 
 
-  async function startCamera(
-    requestedCameraId = ""
-  ) {
+  async function startCamera(requestedCameraId = "") {
 
     const button =
       document.getElementById("cameraButton");
@@ -434,9 +440,8 @@
     button.innerText =
       "カメラを準備しています...";
 
-
-    reader.style.display = "block";
-
+    reader.style.display =
+      "block";
 
     message.innerText =
       "カメラの使用確認が表示されたら「許可」を押してください。";
@@ -444,35 +449,17 @@
 
     try {
 
-      if (
-        scanner &&
-        cameraRunning
-      ) {
-
-        await scanner.stop();
-        await scanner.clear();
-
-      }
-
-
       scanner =
         new Html5Qrcode(
           "reader",
           {
             formatsToSupport: [
-
               Html5QrcodeSupportedFormats.EAN_13,
-
               Html5QrcodeSupportedFormats.EAN_8,
-
               Html5QrcodeSupportedFormats.UPC_A,
-
               Html5QrcodeSupportedFormats.UPC_E,
-
               Html5QrcodeSupportedFormats.CODE_128
-
             ],
-
             verbose: false
           }
         );
@@ -482,10 +469,7 @@
         await Html5Qrcode.getCameras();
 
 
-      if (
-        !cameras ||
-        cameras.length === 0
-      ) {
+      if (!cameras || cameras.length === 0) {
 
         throw new Error(
           "利用可能なカメラが見つかりません"
@@ -544,7 +528,6 @@
           ) {
 
             return {
-
               width:
                 Math.floor(
                   viewfinderWidth * 0.85
@@ -557,7 +540,6 @@
                     viewfinderHeight * 0.35
                   )
                 )
-
             };
 
           },
@@ -584,12 +566,7 @@
         "カメラを停止";
 
 
-      if (
-        typeof cameraSource === "string"
-      ) {
-
-        activeCameraId =
-          cameraSource;
+      if (typeof cameraSource === "string") {
 
         localStorage.setItem(
           CAMERA_STORAGE_KEY,
@@ -600,10 +577,6 @@
           .getElementById("cameraSelect")
           .value =
           cameraSource;
-
-      } else {
-
-        activeCameraId = "";
 
       }
 
@@ -624,9 +597,8 @@
       button.innerText =
         "カメラを起動";
 
-
-      reader.style.display = "none";
-
+      reader.style.display =
+        "none";
 
       message.innerText =
         "カメラを開始できませんでした。\n\n" +
@@ -634,7 +606,6 @@
         (error?.name || "不明") +
         "\n\n詳細：" +
         (error?.message || String(error));
-
 
       console.error(error);
 
@@ -660,7 +631,6 @@
         "cameraSelect"
       );
 
-
     select.innerHTML = "";
 
 
@@ -672,10 +642,8 @@
             "option"
           );
 
-
         option.value =
           camera.id;
-
 
         option.textContent =
           "カメラ " +
@@ -685,7 +653,6 @@
               ? "：" + camera.label
               : ""
           );
-
 
         select.appendChild(option);
 
@@ -751,14 +718,9 @@
       CAMERA_STORAGE_KEY
     );
 
-
-    activeCameraId = "";
-
-
     await stopCamera(false);
 
     await startCamera();
-
 
     document
       .getElementById("message")
@@ -775,7 +737,6 @@
         "cameraSettings"
       );
 
-
     settings.style.display =
       settings.style.display === "block"
         ? "none"
@@ -785,354 +746,9 @@
 
 
   function onScanSuccess(
-  decodedText,
-  decodedResult
-) {
-
-  if (scanLocked) {
-    return;
-  }
-
-
-  const jan =
-    String(decodedText)
-      .replace(/\D/g, "")
-      .trim();
-
-
-  if (!jan) {
-    return;
-  }
-
-
-  scanLocked = true;
-
-
-  if (navigator.vibrate) {
-    navigator.vibrate(100);
-  }
-
-
-  document
-    .getElementById("message")
-    .innerText =
-    "JANコードを読み取りました：" +
-    jan;
-
-
-  searchProduct(jan);
-
-
-  setTimeout(
-    function() {
-
-      scanLocked = false;
-
-    },
-    2500
-  );
-
-}
-  function searchProduct(jan) {
-
-  const normalizedJan =
-    String(jan)
-      .replace(/\D/g, "")
-      .trim();
-
-
-  if (!normalizedJan) {
-
-    showSearchError(
-      "JANコードを確認できませんでした。"
-    );
-
-    return;
-
-  }
-
-
-  document
-    .getElementById("result")
-    .innerHTML = `
-
-      <div class="searchingCard">
-
-        商品情報を検索しています...
-
-        <br>
-
-        JAN：${escapeHtml(normalizedJan)}
-
-      </div>
-
-    `;
-
-
-  const callbackName =
-    "productCallback_" +
-    Date.now();
-
-
-  const script =
-    document.createElement("script");
-
-
-  const timeoutId =
-    setTimeout(
-      function() {
-
-        cleanupJsonp(
-          callbackName,
-          script
-        );
-
-
-        showSearchError(
-          "商品検索がタイムアウトしました。通信状態を確認して、もう一度読み取ってください。"
-        );
-
-      },
-      12000
-    );
-function cleanupJsonp(
-  callbackName,
-  script
-) {
-
-  try {
-
-    delete window[callbackName];
-
-  } catch (error) {
-
-    window[callbackName] =
-      undefined;
-
-  }
-
-
-  if (
-    script &&
-    script.parentNode
+    decodedText,
+    decodedResult
   ) {
-
-    script.parentNode
-      .removeChild(script);
-
-  }
-
-}
-    function showProduct(data) {
-
-  if (!data) {
-
-    showSearchError(
-      "商品情報を取得できませんでした。"
-    );
-
-    return;
-
-  }
-
-
-  if (data.error) {
-
-    showSearchError(
-      data.message ||
-      "商品検索中にエラーが発生しました。"
-    );
-
-    return;
-
-  }
-
-
-  if (!data.found) {
-
-    document
-      .getElementById("result")
-      .innerHTML = `
-
-        <div class="errorCard">
-
-          商品マスターに登録されていません。
-
-          <br><br>
-
-          JAN：
-          ${escapeHtml(data.jan || "")}
-
-        </div>
-
-      `;
-
-
-    document
-      .getElementById("message")
-      .innerText =
-      "該当する商品が見つかりませんでした。";
-
-
-    return;
-
-  }
-
-
-  const premiumPrice =
-    data.premiumPrice
-      ? formatPrice(data.premiumPrice)
-      : "未設定";
-
-
-  document
-    .getElementById("result")
-    .innerHTML = `
-
-      <div class="productCard">
-
-        <div class="productMaker">
-
-          ${escapeHtml(data.maker || "")}
-
-        </div>
-
-
-        <div class="productName">
-
-          ${escapeHtml(data.name || "")}
-
-        </div>
-
-
-        <div class="productCode">
-
-          品番：
-          ${escapeHtml(data.productCode || "-")}
-
-          <br>
-
-          JAN：
-          ${escapeHtml(data.jan || "-")}
-
-        </div>
-
-
-        <div class="priceCard">
-
-          <div class="priceLabel">
-            上代
-          </div>
-
-          <div class="priceValue">
-
-            ${formatPrice(data.retailPrice)}
-
-          </div>
-
-        </div>
-
-
-        <div class="priceCard">
-
-          <div class="priceLabel">
-            通常下代
-          </div>
-
-          <div class="priceValue">
-
-            ${formatPrice(data.normalPrice)}
-
-          </div>
-
-        </div>
-
-
-        <div class="priceCard premiumCard">
-
-          <div class="priceLabel">
-            ★ プレミアム会員価格
-          </div>
-
-          <div class="priceValue">
-
-            ${premiumPrice}
-
-          </div>
-
-        </div>
-
-
-        <div class="lotCard">
-
-          ロット：
-          ${escapeHtml(data.lot || "-")}
-
-        </div>
-
-      </div>
-
-    `;
-
-
-  document
-    .getElementById("message")
-    .innerText =
-    "商品が見つかりました。";
-
-}
-
-  window[callbackName] =
-    function(data) {
-
-      clearTimeout(timeoutId);
-
-
-      cleanupJsonp(
-        callbackName,
-        script
-      );
-
-
-      showProduct(data);
-
-    };
-
-
-  script.onerror =
-    function() {
-
-      clearTimeout(timeoutId);
-
-
-      cleanupJsonp(
-        callbackName,
-        script
-      );
-
-
-      showSearchError(
-        "商品検索APIへ接続できませんでした。"
-      );
-
-    };
-
-
-  script.src =
-    GAS_API_URL +
-    "?jan=" +
-    encodeURIComponent(normalizedJan) +
-    "&callback=" +
-    encodeURIComponent(callbackName) +
-    "&t=" +
-    Date.now();
-
-
-  document
-    .body
-    .appendChild(script);
-
-}
 
     if (scanLocked) {
       return;
@@ -1154,35 +770,24 @@ function cleanupJsonp(
 
 
     if (navigator.vibrate) {
-
       navigator.vibrate(100);
-
     }
+
+
+    document
+      .getElementById("janInput")
+      .value =
+      jan;
 
 
     document
       .getElementById("message")
       .innerText =
-      "JANコードを読み取りました。";
+      "JANコードを読み取りました：" +
+      jan;
 
 
-    document
-      .getElementById("result")
-      .innerHTML = `
-
-        <div class="success">
-
-          <div class="janLabel">
-            読み取ったJANコード
-          </div>
-
-          <div class="jan">
-            ${escapeHtml(jan)}
-          </div>
-
-        </div>
-
-      `;
+    searchProduct(jan);
 
 
     setTimeout(
@@ -1191,8 +796,380 @@ function cleanupJsonp(
         scanLocked = false;
 
       },
-      2000
+      2500
     );
+
+  }
+
+
+  function searchFromInput() {
+
+    const jan =
+      document
+        .getElementById("janInput")
+        .value;
+
+    searchProduct(jan);
+
+  }
+
+
+  function searchProduct(jan) {
+
+    const normalizedJan =
+      String(jan)
+        .replace(/\D/g, "")
+        .trim();
+
+
+    if (!normalizedJan) {
+
+      showSearchError(
+        "JANコードを入力してください。"
+      );
+
+      return;
+
+    }
+
+
+    document
+      .getElementById("result")
+      .innerHTML = `
+
+        <div class="searchingCard">
+
+          商品情報を検索しています...
+
+          <br><br>
+
+          JAN：${escapeHtml(normalizedJan)}
+
+        </div>
+
+      `;
+
+
+    const callbackName =
+      "productCallback_" +
+      Date.now();
+
+
+    const script =
+      document.createElement("script");
+
+
+    const timeoutId =
+      setTimeout(
+        function() {
+
+          cleanupJsonp(
+            callbackName,
+            script
+          );
+
+          showSearchError(
+            "商品検索がタイムアウトしました。通信状態を確認してください。"
+          );
+
+        },
+        12000
+      );
+
+
+    window[callbackName] =
+      function(data) {
+
+        clearTimeout(timeoutId);
+
+        cleanupJsonp(
+          callbackName,
+          script
+        );
+
+        showProduct(data);
+
+      };
+
+
+    script.onerror =
+      function() {
+
+        clearTimeout(timeoutId);
+
+        cleanupJsonp(
+          callbackName,
+          script
+        );
+
+        showSearchError(
+          "商品検索APIへ接続できませんでした。"
+        );
+
+      };
+
+
+    script.src =
+      GAS_API_URL +
+      "?jan=" +
+      encodeURIComponent(normalizedJan) +
+      "&callback=" +
+      encodeURIComponent(callbackName) +
+      "&t=" +
+      Date.now();
+
+
+    document
+      .body
+      .appendChild(script);
+
+  }
+
+
+  function cleanupJsonp(
+    callbackName,
+    script
+  ) {
+
+    try {
+
+      delete window[callbackName];
+
+    } catch (error) {
+
+      window[callbackName] =
+        undefined;
+
+    }
+
+
+    if (
+      script &&
+      script.parentNode
+    ) {
+
+      script.parentNode
+        .removeChild(script);
+
+    }
+
+  }
+
+
+  function showProduct(data) {
+
+    if (!data) {
+
+      showSearchError(
+        "商品情報を取得できませんでした。"
+      );
+
+      return;
+
+    }
+
+
+    if (data.error) {
+
+      showSearchError(
+        data.message ||
+        "商品検索中にエラーが発生しました。"
+      );
+
+      return;
+
+    }
+
+
+    if (!data.found) {
+
+      document
+        .getElementById("result")
+        .innerHTML = `
+
+          <div class="errorCard">
+
+            商品マスターに登録されていません。
+
+            <br><br>
+
+            JAN：
+            ${escapeHtml(data.jan || "")}
+
+          </div>
+
+        `;
+
+
+      document
+        .getElementById("message")
+        .innerText =
+        "該当する商品が見つかりませんでした。";
+
+
+      return;
+
+    }
+
+
+    const premiumPrice =
+      data.premiumPrice
+        ? formatPrice(data.premiumPrice)
+        : "未設定";
+
+
+    document
+      .getElementById("result")
+      .innerHTML = `
+
+        <div class="productCard">
+
+          <div class="productMaker">
+
+            ${escapeHtml(data.maker || "")}
+
+          </div>
+
+          <div class="productName">
+
+            ${escapeHtml(data.name || "")}
+
+          </div>
+
+          <div class="productCode">
+
+            品番：
+            ${escapeHtml(data.productCode || "-")}
+
+            <br>
+
+            JAN：
+            ${escapeHtml(data.jan || "-")}
+
+          </div>
+
+          <div class="priceCard">
+
+            <div class="priceLabel">
+              上代
+            </div>
+
+            <div class="priceValue">
+
+              ${formatPrice(data.retailPrice)}
+
+            </div>
+
+          </div>
+
+          <div class="priceCard">
+
+            <div class="priceLabel">
+              通常下代
+            </div>
+
+            <div class="priceValue">
+
+              ${formatPrice(data.normalPrice)}
+
+            </div>
+
+          </div>
+
+          <div class="priceCard premiumCard">
+
+            <div class="priceLabel">
+              ★ プレミアム会員価格
+            </div>
+
+            <div class="priceValue">
+
+              ${premiumPrice}
+
+            </div>
+
+          </div>
+
+          <div class="lotCard">
+
+            ロット：
+            ${escapeHtml(data.lot || "-")}
+
+          </div>
+
+        </div>
+
+      `;
+
+
+    document
+      .getElementById("message")
+      .innerText =
+      "商品が見つかりました。";
+
+  }
+
+
+  function formatPrice(value) {
+
+    if (
+      value === "" ||
+      value === null ||
+      value === undefined
+    ) {
+
+      return "-";
+
+    }
+
+
+    const cleanedValue =
+      String(value)
+        .replace(/,/g, "")
+        .replace(/¥/g, "")
+        .replace(/円/g, "")
+        .trim();
+
+
+    const numberValue =
+      Number(cleanedValue);
+
+
+    if (Number.isNaN(numberValue)) {
+
+      return escapeHtml(
+        String(value)
+      );
+
+    }
+
+
+    return "¥" +
+      numberValue
+        .toLocaleString("ja-JP");
+
+  }
+
+
+  function showSearchError(message) {
+
+    document
+      .getElementById("result")
+      .innerHTML = `
+
+        <div class="errorCard">
+
+          ${escapeHtml(message)}
+
+        </div>
+
+      `;
+
+
+    document
+      .getElementById("message")
+      .innerText =
+      "商品を検索できませんでした。";
 
   }
 
@@ -1271,6 +1248,22 @@ function cleanupJsonp(
       .replace(/'/g, "&#039;");
 
   }
+
+
+  document
+    .getElementById("janInput")
+    .addEventListener(
+      "keydown",
+      function(event) {
+
+        if (event.key === "Enter") {
+
+          searchFromInput();
+
+        }
+
+      }
+    );
 </script>
 
 </body>
