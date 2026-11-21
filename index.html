@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  >
+
+  <title>商品価格検索</title>
+
+  <script
+    src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background: #0f172a;
+      color: white;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      margin-bottom: 24px;
+      color: #94a3b8;
+    }
+
+    .cameraButton {
+      width: 100%;
+      padding: 16px;
+
+      border: none;
+      border-radius: 12px;
+
+      background: #2563eb;
+      color: white;
+
+      font-size: 17px;
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    .cameraButton:disabled {
+      opacity: 0.6;
+    }
+
+    #reader {
+      display: none;
+
+      width: 100%;
+      margin-top: 15px;
+
+      overflow: hidden;
+
+      border: 2px solid #10b981;
+      border-radius: 16px;
+
+      background: black;
+    }
+
+    #reader video {
+      width: 100% !important;
+    }
+
+    #message {
+      margin-top: 15px;
+
+      color: #cbd5e1;
+
+      font-size: 14px;
+      line-height: 1.6;
+
+      white-space: pre-wrap;
+    }
+
+    .success {
+      margin-top: 18px;
+      padding: 16px;
+
+      border: 1px solid #10b981;
+      border-radius: 12px;
+
+      background: #064e3b;
+    }
+
+    .jan {
+      margin-top: 6px;
+
+      font-size: 25px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>商品価格検索</h1>
+
+    <div class="subtitle">
+      GitHub Pages カメラ動作テスト
+    </div>
+
+    <button
+      id="cameraButton"
+      class="cameraButton"
+      onclick="startCamera()"
+    >
+      カメラを起動
+    </button>
+
+    <div id="reader"></div>
+
+    <div id="message">
+      カメラを起動してJANバーコードを読み取ります。
+    </div>
+
+    <div id="result"></div>
+
+  </div>
+
+
+  <script>
+    let scanner = null;
+    let cameraRunning = false;
+    let scanLocked = false;
+
+
+    async function startCamera() {
+
+      const button =
+        document.getElementById("cameraButton");
+
+      const reader =
+        document.getElementById("reader");
+
+      const message =
+        document.getElementById("message");
+
+
+      if (cameraRunning) {
+
+        await stopCamera();
+
+        return;
+
+      }
+
+
+      if (typeof Html5Qrcode === "undefined") {
+
+        message.innerText =
+          "バーコード読取機能を読み込めませんでした。";
+
+        return;
+
+      }
+
+
+      button.disabled = true;
+
+      button.innerText =
+        "カメラを準備しています...";
+
+
+      reader.style.display = "block";
+
+
+      message.innerText =
+        "カメラの使用確認が表示されたら「許可」を押してください。";
+
+
+      try {
+
+        scanner =
+          new Html5Qrcode(
+            "reader",
+            {
+              formatsToSupport: [
+
+                Html5QrcodeSupportedFormats.EAN_13,
+
+                Html5QrcodeSupportedFormats.EAN_8,
+
+                Html5QrcodeSupportedFormats.UPC_A,
+
+                Html5QrcodeSupportedFormats.UPC_E,
+
+                Html5QrcodeSupportedFormats.CODE_128
+
+              ],
+
+              verbose: false
+            }
+          );
+
+
+        await scanner.start(
+
+          {
+            facingMode: {
+              ideal: "environment"
+            }
+          },
+
+          {
+            fps: 10,
+
+            qrbox: function(
+              viewfinderWidth,
+              viewfinderHeight
+            ) {
+
+              return {
+
+                width:
+                  Math.floor(
+                    viewfinderWidth * 0.85
+                  ),
+
+                height:
+                  Math.min(
+                    140,
+                    Math.floor(
+                      viewfinderHeight * 0.35
+                    )
+                  )
+
+              };
+
+            },
+
+            aspectRatio: 1.777778,
+
+            disableFlip: false
+          },
+
+          onScanSuccess,
+
+          function() {
+            // 読み取れないフレームは無視
+          }
+
+        );
+
+
+        cameraRunning = true;
+
+        button.disabled = false;
+
+        button.innerText =
+          "カメラを停止";
+
+
+        message.innerText =
+          "JANバーコードを緑色の枠内に合わせてください。";
+
+
+      } catch (error) {
+
+        cameraRunning = false;
+
+        button.disabled = false;
+
+        button.innerText =
+          "カメラを起動";
+
+
+        reader.style.display = "none";
+
+
+        const errorName =
+          error?.name || "不明";
+
+        const errorMessage =
+          error?.message ||
+          String(error);
+
+
+        message.innerText =
+          "カメラを開始できませんでした。\n" +
+          "エラー種類：" +
+          errorName +
+          "\n詳細：" +
+          errorMessage;
+
+
+        console.error(error);
+
+      }
+
+    }
+
+
+    function onScanSuccess(
+      decodedText,
+      decodedResult
+    ) {
+
+      if (scanLocked) {
+        return;
+      }
+
+
+      const jan =
+        String(decodedText)
+          .replace(/\D/g, "")
+          .trim();
+
+
+      if (!jan) {
+        return;
+      }
+
+
+      scanLocked = true;
+
+
+      if (navigator.vibrate) {
+
+        navigator.vibrate(100);
+
+      }
+
+
+      document
+        .getElementById("message")
+        .innerText =
+        "JANコードを読み取りました。";
+
+
+      document
+        .getElementById("result")
+        .innerHTML = `
+
+        <div class="success">
+
+          読み取り成功
+
+          <div class="jan">
+            ${escapeHtml(jan)}
+          </div>
+
+        </div>
+
+      `;
+
+
+      setTimeout(
+        function() {
+
+          scanLocked = false;
+
+        },
+        2000
+      );
+
+    }
+
+
+    async function stopCamera() {
+
+      if (
+        scanner &&
+        cameraRunning
+      ) {
+
+        try {
+
+          await scanner.stop();
+
+          await scanner.clear();
+
+        } catch (error) {
+
+          console.error(error);
+
+        }
+
+      }
+
+
+      scanner = null;
+
+      cameraRunning = false;
+
+
+      document
+        .getElementById("reader")
+        .style.display = "none";
+
+
+      document
+        .getElementById("cameraButton")
+        .innerText =
+        "カメラを起動";
+
+
+      document
+        .getElementById("message")
+        .innerText =
+        "カメラを停止しました。";
+
+    }
+
+
+    function escapeHtml(text) {
+
+      return String(text)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+    }
+  </script>
+
+</body>
+</html>
