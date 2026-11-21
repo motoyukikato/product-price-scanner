@@ -1,51 +1,216 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
   >
 
-  <title>カメラテスト</title>
+  <title>商品価格検索</title>
+
+  <script
+    src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
+  </script>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
       background: #0f172a;
       color: white;
-      padding: 20px;
-      margin: 0;
     }
 
     .container {
+      width: 100%;
       max-width: 500px;
       margin: auto;
     }
 
-    button {
-      width: 100%;
-      padding: 18px;
-      border: 0;
-      border-radius: 12px;
-      background: #10b981;
-      color: #06281f;
-      font-size: 18px;
-      font-weight: bold;
+    h1 {
+      margin: 0 0 5px;
+      font-size: 29px;
     }
 
-    video {
+    .subtitle {
+      margin-bottom: 24px;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    .cameraButton {
       width: 100%;
-      margin-top: 20px;
+      padding: 17px;
+
+      border: none;
+      border-radius: 14px;
+
+      background: #2563eb;
+      color: white;
+
+      font-size: 18px;
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    .cameraButton:disabled {
+      opacity: 0.5;
+    }
+
+    #reader {
+      display: none;
+
+      width: 100%;
+      margin-top: 15px;
+
+      overflow: hidden;
+
+      border: 2px solid #10b981;
       border-radius: 16px;
+
       background: black;
     }
 
+    #reader video {
+      width: 100% !important;
+    }
+
     #message {
-      margin-top: 20px;
-      white-space: pre-wrap;
+      margin-top: 15px;
+
+      color: #cbd5e1;
+
+      font-size: 14px;
       line-height: 1.7;
+
+      white-space: pre-wrap;
+    }
+
+    .settingsButton {
+      width: 100%;
+      padding: 13px;
+      margin-top: 12px;
+
+      border: 1px solid #475569;
+      border-radius: 12px;
+
+      background: #1e293b;
+      color: white;
+
+      font-size: 15px;
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    #cameraSettings {
+      display: none;
+
+      margin-top: 12px;
+      padding: 16px;
+
+      border: 1px solid #334155;
+      border-radius: 16px;
+
+      background: #111827;
+    }
+
+    .settingsTitle {
+      margin-bottom: 12px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    #cameraSelect {
+      width: 100%;
+      padding: 14px;
+
+      border: 1px solid #475569;
+      border-radius: 10px;
+
+      background: #1e293b;
+      color: white;
+
+      font-size: 16px;
+    }
+
+    .changeButton {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+
+      border: none;
+      border-radius: 10px;
+
+      background: #10b981;
+      color: #052e25;
+
+      font-size: 16px;
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    .resetButton {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+
+      border: 1px solid #64748b;
+      border-radius: 10px;
+
+      background: transparent;
+      color: #cbd5e1;
+
+      font-size: 14px;
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    .settingsHelp {
+      margin-top: 13px;
+
+      color: #94a3b8;
+
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .success {
+      margin-top: 18px;
+      padding: 17px;
+
+      border: 1px solid #10b981;
+      border-radius: 14px;
+
+      background: #064e3b;
+    }
+
+    .janLabel {
+      color: #a7f3d0;
+      font-size: 13px;
+    }
+
+    .jan {
+      margin-top: 5px;
+
+      font-size: 26px;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -54,94 +219,614 @@
 
 <div class="container">
 
-  <h1>カメラテスト</h1>
+  <h1>商品価格検索</h1>
 
-  <p>
-    iPhone / Android カメラ動作確認
-  </p>
+  <div class="subtitle">
+    商品のJANバーコードをカメラで読み取ります
+  </div>
 
-  <button onclick="startCamera()">
+  <button
+    id="cameraButton"
+    class="cameraButton"
+    onclick="toggleCamera()"
+  >
     カメラを起動
   </button>
 
-  <video
-    id="video"
-    autoplay
-    playsinline
-    muted>
-  </video>
+  <div id="reader"></div>
 
-  <div id="message"></div>
+  <div id="message">
+    カメラを起動してください。
+  </div>
+
+  <button
+    class="settingsButton"
+    onclick="toggleCameraSettings()"
+  >
+    読み取れない場合・カメラを変更
+  </button>
+
+  <div id="cameraSettings">
+
+    <div class="settingsTitle">
+      使用するカメラ
+    </div>
+
+    <select id="cameraSelect">
+      <option value="">
+        カメラを起動すると候補が表示されます
+      </option>
+    </select>
+
+    <button
+      class="changeButton"
+      onclick="changeCamera()"
+    >
+      選択したカメラに変更
+    </button>
+
+    <button
+      class="resetButton"
+      onclick="resetCameraSetting()"
+    >
+      おすすめ設定に戻す
+    </button>
+
+    <div class="settingsHelp">
+      ピントが合わない場合は、カメラ1・カメラ2・カメラ3を順番に試してください。
+      選択したカメラは、この端末に保存されます。
+    </div>
+
+  </div>
+
+  <div id="result"></div>
 
 </div>
 
 <script>
+  const CAMERA_STORAGE_KEY =
+    "productPricePreferredCamera";
 
-async function startCamera() {
-
-  const video =
-    document.getElementById("video");
-
-  const message =
-    document.getElementById("message");
-
-
-  message.innerText =
-    "カメラを起動しています...";
+  let scanner = null;
+  let cameraRunning = false;
+  let scanLocked = false;
+  let cameras = [];
+  let activeCameraId = "";
 
 
-  try {
+  async function toggleCamera() {
 
-    if (!navigator.mediaDevices) {
-
-      throw new Error(
-        "mediaDevicesが利用できません"
-      );
-
+    if (cameraRunning) {
+      await stopCamera();
+      return;
     }
 
-
-    if (!navigator.mediaDevices.getUserMedia) {
-
-      throw new Error(
-        "getUserMediaが利用できません"
-      );
-
-    }
-
-
-    const stream =
-      await navigator.mediaDevices.getUserMedia({
-
-        video:{
-  facingMode: "environment"
-},
-
-        audio: false
-
-      });
-
-
-    video.srcObject = stream;
-
-
-    message.innerText =
-      "カメラ起動成功";
-
-
-  } catch (error) {
-
-    message.innerText =
-      "カメラ起動失敗\n\n" +
-      "エラー：" +
-      (error.name || "不明") +
-      "\n\n詳細：" +
-      (error.message || error);
+    await startCamera();
 
   }
 
-}
 
+  async function startCamera(
+    requestedCameraId = ""
+  ) {
+
+    const button =
+      document.getElementById("cameraButton");
+
+    const reader =
+      document.getElementById("reader");
+
+    const message =
+      document.getElementById("message");
+
+
+    if (typeof Html5Qrcode === "undefined") {
+
+      message.innerText =
+        "バーコード読取機能を読み込めませんでした。";
+
+      return;
+
+    }
+
+
+    button.disabled = true;
+
+    button.innerText =
+      "カメラを準備しています...";
+
+
+    reader.style.display = "block";
+
+
+    message.innerText =
+      "カメラの使用確認が表示されたら「許可」を押してください。";
+
+
+    try {
+
+      if (
+        scanner &&
+        cameraRunning
+      ) {
+
+        await scanner.stop();
+        await scanner.clear();
+
+      }
+
+
+      scanner =
+        new Html5Qrcode(
+          "reader",
+          {
+            formatsToSupport: [
+
+              Html5QrcodeSupportedFormats.EAN_13,
+
+              Html5QrcodeSupportedFormats.EAN_8,
+
+              Html5QrcodeSupportedFormats.UPC_A,
+
+              Html5QrcodeSupportedFormats.UPC_E,
+
+              Html5QrcodeSupportedFormats.CODE_128
+
+            ],
+
+            verbose: false
+          }
+        );
+
+
+      cameras =
+        await Html5Qrcode.getCameras();
+
+
+      if (
+        !cameras ||
+        cameras.length === 0
+      ) {
+
+        throw new Error(
+          "利用可能なカメラが見つかりません"
+        );
+
+      }
+
+
+      createCameraOptions();
+
+
+      const savedCameraId =
+        localStorage.getItem(
+          CAMERA_STORAGE_KEY
+        );
+
+
+      let cameraSource;
+
+
+      if (
+        requestedCameraId &&
+        cameraExists(requestedCameraId)
+      ) {
+
+        cameraSource =
+          requestedCameraId;
+
+      } else if (
+        savedCameraId &&
+        cameraExists(savedCameraId)
+      ) {
+
+        cameraSource =
+          savedCameraId;
+
+      } else {
+
+        cameraSource = {
+          facingMode: "environment"
+        };
+
+      }
+
+
+      await scanner.start(
+
+        cameraSource,
+
+        {
+          fps: 10,
+
+          qrbox: function(
+            viewfinderWidth,
+            viewfinderHeight
+          ) {
+
+            return {
+
+              width:
+                Math.floor(
+                  viewfinderWidth * 0.85
+                ),
+
+              height:
+                Math.min(
+                  140,
+                  Math.floor(
+                    viewfinderHeight * 0.35
+                  )
+                )
+
+            };
+
+          },
+
+          aspectRatio: 1.777778,
+
+          disableFlip: false
+        },
+
+        onScanSuccess,
+
+        function() {
+          // 読み取れないフレームは無視
+        }
+
+      );
+
+
+      cameraRunning = true;
+
+      button.disabled = false;
+
+      button.innerText =
+        "カメラを停止";
+
+
+      if (
+        typeof cameraSource === "string"
+      ) {
+
+        activeCameraId =
+          cameraSource;
+
+        localStorage.setItem(
+          CAMERA_STORAGE_KEY,
+          cameraSource
+        );
+
+        document
+          .getElementById("cameraSelect")
+          .value =
+          cameraSource;
+
+      } else {
+
+        activeCameraId = "";
+
+      }
+
+
+      message.innerText =
+        "JANバーコードを緑色の枠内に合わせてください。\n" +
+        "利用可能なカメラ：" +
+        cameras.length +
+        "台";
+
+
+    } catch (error) {
+
+      cameraRunning = false;
+
+      button.disabled = false;
+
+      button.innerText =
+        "カメラを起動";
+
+
+      reader.style.display = "none";
+
+
+      message.innerText =
+        "カメラを開始できませんでした。\n\n" +
+        "エラー種類：" +
+        (error?.name || "不明") +
+        "\n\n詳細：" +
+        (error?.message || String(error));
+
+
+      console.error(error);
+
+    }
+
+  }
+
+
+  function cameraExists(cameraId) {
+
+    return cameras.some(
+      camera =>
+        camera.id === cameraId
+    );
+
+  }
+
+
+  function createCameraOptions() {
+
+    const select =
+      document.getElementById(
+        "cameraSelect"
+      );
+
+
+    select.innerHTML = "";
+
+
+    cameras.forEach(
+      function(camera, index) {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+
+        option.value =
+          camera.id;
+
+
+        option.textContent =
+          "カメラ " +
+          (index + 1) +
+          (
+            camera.label
+              ? "：" + camera.label
+              : ""
+          );
+
+
+        select.appendChild(option);
+
+      }
+    );
+
+
+    const savedCameraId =
+      localStorage.getItem(
+        CAMERA_STORAGE_KEY
+      );
+
+
+    if (
+      savedCameraId &&
+      cameraExists(savedCameraId)
+    ) {
+
+      select.value =
+        savedCameraId;
+
+    }
+
+  }
+
+
+  async function changeCamera() {
+
+    const cameraId =
+      document
+        .getElementById("cameraSelect")
+        .value;
+
+
+    if (!cameraId) {
+
+      document
+        .getElementById("message")
+        .innerText =
+        "変更するカメラを選択してください。";
+
+      return;
+
+    }
+
+
+    localStorage.setItem(
+      CAMERA_STORAGE_KEY,
+      cameraId
+    );
+
+
+    await stopCamera(false);
+
+    await startCamera(cameraId);
+
+  }
+
+
+  async function resetCameraSetting() {
+
+    localStorage.removeItem(
+      CAMERA_STORAGE_KEY
+    );
+
+
+    activeCameraId = "";
+
+
+    await stopCamera(false);
+
+    await startCamera();
+
+
+    document
+      .getElementById("message")
+      .innerText =
+      "おすすめの背面カメラ設定に戻しました。";
+
+  }
+
+
+  function toggleCameraSettings() {
+
+    const settings =
+      document.getElementById(
+        "cameraSettings"
+      );
+
+
+    settings.style.display =
+      settings.style.display === "block"
+        ? "none"
+        : "block";
+
+  }
+
+
+  function onScanSuccess(
+    decodedText,
+    decodedResult
+  ) {
+
+    if (scanLocked) {
+      return;
+    }
+
+
+    const jan =
+      String(decodedText)
+        .replace(/\D/g, "")
+        .trim();
+
+
+    if (!jan) {
+      return;
+    }
+
+
+    scanLocked = true;
+
+
+    if (navigator.vibrate) {
+
+      navigator.vibrate(100);
+
+    }
+
+
+    document
+      .getElementById("message")
+      .innerText =
+      "JANコードを読み取りました。";
+
+
+    document
+      .getElementById("result")
+      .innerHTML = `
+
+        <div class="success">
+
+          <div class="janLabel">
+            読み取ったJANコード
+          </div>
+
+          <div class="jan">
+            ${escapeHtml(jan)}
+          </div>
+
+        </div>
+
+      `;
+
+
+    setTimeout(
+      function() {
+
+        scanLocked = false;
+
+      },
+      2000
+    );
+
+  }
+
+
+  async function stopCamera(
+    showMessage = true
+  ) {
+
+    if (
+      scanner &&
+      cameraRunning
+    ) {
+
+      try {
+
+        await scanner.stop();
+
+        await scanner.clear();
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+    }
+
+
+    scanner = null;
+
+    cameraRunning = false;
+
+
+    document
+      .getElementById("reader")
+      .style.display =
+      "none";
+
+
+    const button =
+      document.getElementById(
+        "cameraButton"
+      );
+
+
+    button.disabled = false;
+
+    button.innerText =
+      "カメラを起動";
+
+
+    if (showMessage) {
+
+      document
+        .getElementById("message")
+        .innerText =
+        "カメラを停止しました。";
+
+    }
+
+  }
+
+
+  function escapeHtml(text) {
+
+    return String(text)
+
+      .replace(/&/g, "&amp;")
+
+      .replace(/</g, "&lt;")
+
+      .replace(/>/g, "&gt;")
+
+      .replace(/"/g, "&quot;")
+
+      .replace(/'/g, "&#039;");
+
+  }
 </script>
 
 </body>
