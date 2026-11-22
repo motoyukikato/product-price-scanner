@@ -14,6 +14,535 @@
   integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
   crossorigin="anonymous"
   referrerpolicy="no-referrer">
+  /* =========================================
+   見積書PDF作成
+========================================= */
+
+function initializePdfDate() {
+
+  const dateInput =
+    document.getElementById("pdfEstimateDate");
+
+  if (!dateInput || dateInput.value) {
+    return;
+  }
+
+  const today =
+    new Date();
+
+  const year =
+    today.getFullYear();
+
+  const month =
+    String(
+      today.getMonth() + 1
+    ).padStart(2, "0");
+
+  const day =
+    String(
+      today.getDate()
+    ).padStart(2, "0");
+
+  dateInput.value =
+    year + "-" + month + "-" + day;
+}
+
+
+/* =========================================
+   PDF作成開始
+========================================= */
+
+function createEstimatePdf() {
+
+  if (typeof html2pdf === "undefined") {
+
+    alert(
+      "PDF作成機能を読み込めませんでした。ページを再読み込みしてください。"
+    );
+
+    return;
+  }
+
+
+  if (estimateItems.size === 0) {
+
+    alert(
+      "見積商品を1つ以上追加してください。"
+    );
+
+    return;
+  }
+
+
+  const customerName =
+    document
+      .getElementById("pdfCustomerName")
+      .value
+      .trim();
+
+
+  const issuerName =
+    document
+      .getElementById("pdfIssuerName")
+      .value
+      .trim();
+
+
+  const estimateDate =
+    document
+      .getElementById("pdfEstimateDate")
+      .value;
+
+
+  const validity =
+    document
+      .getElementById("pdfValidity")
+      .value
+      .trim();
+
+
+  const note =
+    document
+      .getElementById("pdfNote")
+      .value
+      .trim();
+
+
+  if (!customerName) {
+
+    alert(
+      "見積先名を入力してください。"
+    );
+
+    return;
+  }
+
+
+  buildPdfDocument({
+
+    customerName:
+      customerName,
+
+    issuerName:
+      issuerName,
+
+    estimateDate:
+      estimateDate,
+
+    validity:
+      validity,
+
+    note:
+      note
+
+  });
+
+}
+
+
+/* =========================================
+   PDF内容を組み立てる
+========================================= */
+
+function buildPdfDocument(info) {
+
+  let subtotal =
+    0;
+
+
+  const rows =
+    Array
+      .from(
+        estimateItems.values()
+      )
+      .map(
+        function(item, index) {
+
+          const product =
+            item.product;
+
+
+          const quantity =
+            item.quantity;
+
+
+          const unitPrice =
+            getPrice(product);
+
+
+          const itemTotal =
+            unitPrice * quantity;
+
+
+          subtotal +=
+            itemTotal;
+
+
+          return `
+
+            <tr>
+
+              <td class="pdfCellCenter">
+                ${index + 1}
+              </td>
+
+              <td>
+                ${escapeHtml(
+                  product.productCode || "-"
+                )}
+              </td>
+
+              <td>
+                ${escapeHtml(
+                  product.name || ""
+                )}
+              </td>
+
+              <td class="pdfCellCenter">
+                ${quantity}
+              </td>
+
+              <td class="pdfCellRight">
+                ${formatPrice(unitPrice)}
+              </td>
+
+              <td class="pdfCellRight">
+                ${formatPrice(itemTotal)}
+              </td>
+
+            </tr>
+
+          `;
+
+        }
+      )
+      .join("");
+
+
+  /* 消費税 */
+
+  const tax =
+    Math.floor(
+      subtotal * 0.10
+    );
+
+
+  const total =
+    subtotal + tax;
+
+
+  /* 商品一覧 */
+
+  document
+    .getElementById("pdfItemRows")
+    .innerHTML =
+    rows;
+
+
+  /* 見積先 */
+
+  document
+    .getElementById("pdfCustomerDisplay")
+    .innerText =
+    info.customerName;
+
+
+  /* 発行元 */
+
+  document
+    .getElementById("pdfIssuerDisplay")
+    .innerText =
+    info.issuerName
+      ? "発行元：" + info.issuerName
+      : "";
+
+
+  /* 見積日 */
+
+  document
+    .getElementById("pdfDateDisplay")
+    .innerText =
+    "見積日：" +
+    formatPdfDate(
+      info.estimateDate
+    );
+
+
+  /* 有効期限 */
+
+  document
+    .getElementById("pdfValidityDisplay")
+    .innerText =
+    info.validity || "-";
+
+
+  /* 備考 */
+
+  document
+    .getElementById("pdfNoteDisplay")
+    .innerText =
+    info.note || "-";
+
+
+  /* 金額 */
+
+  document
+    .getElementById("pdfSubtotal")
+    .innerText =
+    formatPrice(subtotal);
+
+
+  document
+    .getElementById("pdfTax")
+    .innerText =
+    formatPrice(tax);
+
+
+  document
+    .getElementById("pdfTotal")
+    .innerText =
+    formatPrice(total);
+
+
+  document
+    .getElementById("pdfGrandTotal")
+    .innerText =
+    formatPrice(total);
+
+
+  /* PDFファイル作成 */
+
+  generatePdfFile(
+    info.customerName
+  );
+
+}
+
+
+/* =========================================
+   PDFを保存
+========================================= */
+
+function generatePdfFile(customerName) {
+
+  const button =
+    document.getElementById(
+      "createPdfButton"
+    );
+
+
+  const message =
+    document.getElementById(
+      "pdfMessage"
+    );
+
+
+  button.disabled =
+    true;
+
+
+  button.innerText =
+    "PDFを作成しています...";
+
+
+  message.innerText =
+    "見積書を作成しています。";
+
+
+  const today =
+    new Date();
+
+
+  const fileDate =
+    today.getFullYear() +
+    String(
+      today.getMonth() + 1
+    ).padStart(2, "0") +
+    String(
+      today.getDate()
+    ).padStart(2, "0");
+
+
+  /* ファイル名に使えない文字を除去 */
+
+  const safeCustomerName =
+    customerName
+      .replace(
+        /[\\/:*?"<>|]/g,
+        "_"
+      )
+      .slice(0, 30);
+
+
+  const fileName =
+    "見積書_" +
+    fileDate +
+    "_" +
+    safeCustomerName +
+    ".pdf";
+
+
+  const options = {
+
+    margin:
+      [8, 8, 8, 8],
+
+    filename:
+      fileName,
+
+    image: {
+
+      type:
+        "jpeg",
+
+      quality:
+        0.96
+    },
+
+    html2canvas: {
+
+      scale:
+        2,
+
+      useCORS:
+        true,
+
+      backgroundColor:
+        "#ffffff",
+
+      scrollX:
+        0,
+
+      scrollY:
+        0
+    },
+
+    jsPDF: {
+
+      unit:
+        "mm",
+
+      format:
+        "a4",
+
+      orientation:
+        "portrait"
+    },
+
+    pagebreak: {
+
+      mode:
+        ["css", "legacy"],
+
+      avoid:
+        [
+          "tr",
+          ".pdfSummary",
+          ".pdfInformation"
+        ]
+    }
+
+  };
+
+
+  html2pdf()
+
+    .set(options)
+
+    .from(
+      document.getElementById(
+        "pdfDocument"
+      )
+    )
+
+    .save()
+
+    .then(
+      function() {
+
+        button.disabled =
+          false;
+
+
+        button.innerText =
+          "見積書PDFを作成";
+
+
+        message.innerText =
+          "見積書PDFを作成しました。";
+
+      }
+    )
+
+    .catch(
+      function(error) {
+
+        console.error(
+          error
+        );
+
+
+        button.disabled =
+          false;
+
+
+        button.innerText =
+          "見積書PDFを作成";
+
+
+        message.innerText =
+          "PDFを作成できませんでした。";
+
+
+        alert(
+          "PDFを作成できませんでした。もう一度お試しください。"
+        );
+
+      }
+    );
+
+}
+
+
+/* =========================================
+   PDF用の日付表示
+========================================= */
+
+function formatPdfDate(value) {
+
+  if (!value) {
+    return "-";
+  }
+
+
+  const parts =
+    value.split("-");
+
+
+  if (
+    parts.length !== 3
+  ) {
+
+    return value;
+
+  }
+
+
+  return (
+    parts[0] +
+    "年" +
+    Number(parts[1]) +
+    "月" +
+    Number(parts[2]) +
+    "日"
+  );
+
+}
+
+
+/* 今日の日付を初期表示 */
+
+initializePdfDate(); 
 </script>
   <style>
     html,
@@ -42,6 +571,304 @@ a,
 input,
 select {
   touch-action: manipulation;
+}
+    /* =========================
+   見積書PDF 入力フォーム
+========================= */
+
+.pdfInputPanel {
+  margin-bottom: 20px;
+}
+
+.pdfInputLabel {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 5px;
+
+  color: #cbd5e1;
+
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.pdfInput,
+.pdfTextarea {
+  width: 100%;
+  padding: 13px;
+
+  border: 1px solid #475569;
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #0f172a;
+  color: white;
+
+  font-size: 16px;
+
+  touch-action: manipulation;
+}
+
+.pdfTextarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.pdfInput:focus,
+.pdfTextarea:focus {
+  border-color: #f59e0b;
+}
+
+.createPdfButton {
+  width: 100%;
+
+  margin-top: 16px;
+  padding: 16px;
+
+  border: none;
+  border-radius: 11px;
+
+  background: #f59e0b;
+  color: #422006;
+
+  font-size: 17px;
+  font-weight: bold;
+
+  touch-action: manipulation;
+}
+
+.pdfMessage {
+  margin-top: 10px;
+
+  color: #cbd5e1;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+
+/* =========================
+   PDF本体
+   普段の画面では左側へ隠す
+========================= */
+
+#pdfDocument {
+  position: fixed;
+
+  top: 0;
+  left: -10000px;
+
+  width: 794px;
+  min-height: 1123px;
+
+  padding: 55px 55px 45px;
+
+  background: #ffffff;
+  color: #111827;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Noto Sans JP",
+    sans-serif;
+}
+
+
+/* =========================
+   PDFヘッダー
+========================= */
+
+.pdfHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 3px solid #1e293b;
+}
+
+.pdfDocumentTitle {
+  font-size: 30px;
+  font-weight: bold;
+
+  letter-spacing: 8px;
+}
+
+.pdfCustomerDisplay {
+  min-width: 330px;
+
+  margin-top: 25px;
+  padding-bottom: 6px;
+
+  border-bottom: 1px solid #64748b;
+
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.pdfHeaderRight {
+  font-size: 12px;
+  line-height: 1.9;
+
+  text-align: right;
+}
+
+
+/* =========================
+   見積金額
+========================= */
+
+.pdfTotalBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 25px 0 20px;
+  padding: 15px 18px;
+
+  border: 2px solid #1e293b;
+}
+
+.pdfTotalLabel {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.pdfGrandTotal {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+
+/* =========================
+   商品一覧
+========================= */
+
+.pdfTable {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  font-size: 11px;
+}
+
+.pdfTable th {
+  padding: 9px 7px;
+
+  border: 1px solid #64748b;
+
+  background: #e2e8f0;
+
+  text-align: center;
+}
+
+.pdfTable td {
+  padding: 9px 7px;
+
+  border: 1px solid #94a3b8;
+
+  vertical-align: middle;
+}
+
+.pdfTable tr {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.pdfNumberColumn {
+  width: 40px;
+}
+
+.pdfCodeColumn {
+  width: 110px;
+}
+
+.pdfQuantityColumn {
+  width: 55px;
+}
+
+.pdfPriceColumn {
+  width: 90px;
+}
+
+.pdfCellCenter {
+  text-align: center;
+}
+
+.pdfCellRight {
+  text-align: right;
+}
+
+
+/* =========================
+   合計金額
+========================= */
+
+.pdfSummary {
+  width: 290px;
+
+  margin-top: 18px;
+  margin-left: auto;
+}
+
+.pdfSummaryRow {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 7px 4px;
+
+  border-bottom: 1px solid #cbd5e1;
+
+  font-size: 12px;
+}
+
+.pdfSummaryTotal {
+  padding-top: 10px;
+
+  border-bottom: 3px double #1e293b;
+
+  font-size: 16px;
+}
+
+
+/* =========================
+   有効期限・備考
+========================= */
+
+.pdfInformation {
+  margin-top: 28px;
+  padding: 14px;
+
+  border: 1px solid #94a3b8;
+
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.pdfNoteTitle {
+  margin-top: 10px;
+
+  font-weight: bold;
+}
+
+.pdfNoteDisplay {
+  min-height: 35px;
+
+  white-space: pre-wrap;
+}
+
+.pdfFooter {
+  margin-top: 25px;
+
+  color: #64748b;
+
+  font-size: 9px;
+
+  text-align: center;
 }
   </style>
 </head>
