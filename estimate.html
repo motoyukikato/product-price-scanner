@@ -9,6 +9,12 @@
   <meta name="theme-color" content="#0f172a">
   <title>かんたん見積</title>
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <script
+  src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+  integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer">
+</script>
   <style>
     html,
 body {
@@ -97,7 +103,100 @@ select {
     <div id="searchResults"></div>
   </div>
 
-  <div class="panel"><div class="title">見積商品 <span id="itemCount" class="maker">0商品</span></div><div id="empty" class="empty">商品がまだ追加されていません。</div><div id="items"></div></div>
+  <div class="panel"><div class="title">見積商品 <span id="itemCount" class="maker">0商品</span></div><div id="empty" class="empty">商品がまだ追加されていません。</div><div id="items"></div>
+  </div>
+  <div class="panel">
+  <div class="title">
+    見積商品
+    <span id="itemCount" class="maker">0商品</span>
+  </div>
+
+  <div id="empty" class="empty">
+    商品がまだ追加されていません。
+  </div>
+
+  <div id="items"></div>
+</div>
+
+
+<!-- ここに追加 -->
+
+<div class="panel pdfInputPanel">
+
+  <div class="title">
+    見積書を作成
+  </div>
+
+  <label class="pdfInputLabel">
+    見積先名
+  </label>
+
+  <input
+    id="pdfCustomerName"
+    class="pdfInput"
+    type="text"
+    placeholder="例：〇〇フラワー 御中"
+  >
+
+  <label class="pdfInputLabel">
+    発行元
+  </label>
+
+  <input
+    id="pdfIssuerName"
+    class="pdfInput"
+    type="text"
+    placeholder="例：〇〇フラワー"
+  >
+
+  <label class="pdfInputLabel">
+    見積日
+  </label>
+
+  <input
+    id="pdfEstimateDate"
+    class="pdfInput"
+    type="date"
+  >
+
+  <label class="pdfInputLabel">
+    見積有効期限
+  </label>
+
+  <input
+    id="pdfValidity"
+    class="pdfInput"
+    type="text"
+    value="発行日より30日間"
+  >
+
+  <label class="pdfInputLabel">
+    備考
+  </label>
+
+  <textarea
+    id="pdfNote"
+    class="pdfTextarea"
+    placeholder="納期、送料、その他の条件など"
+  ></textarea>
+
+  <button
+    id="createPdfButton"
+    class="createPdfButton"
+    onclick="createEstimatePdf()"
+  >
+    見積書PDFを作成
+  </button>
+
+  <div
+    id="pdfMessage"
+    class="pdfMessage"
+  ></div>
+
+</div>
+
+
+</div>
 </div>
 <div class="summary"><div class="sumrow"><span>商品点数 / 合計数量</span><strong id="countSummary">0点 / 0個</strong></div><div class="sumrow"><span>税抜合計</span><strong id="subtotalSummary">¥0</strong></div><div class="sumrow"><span>消費税10%</span><strong id="taxSummary">¥0</strong></div><div class="sumrow"><span>税込合計</span><strong id="totalSummary" class="total">¥0</strong></div></div>
 
