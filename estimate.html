@@ -18,6 +18,11 @@
     .item-top{display:flex;justify-content:space-between;gap:12px}.remove{height:34px;padding:0 10px;border:1px solid #ef4444;border-radius:8px;background:transparent;color:#fca5a5;font-weight:700}.price-line,.subtotal{display:flex;justify-content:space-between;align-items:center;margin-top:11px;padding-top:10px;border-top:1px solid #334155}.unit,.subtotal strong{font-size:20px;font-weight:800}.qty{display:grid;grid-template-columns:44px 1fr 44px;gap:8px;margin-top:12px}.qty button{border:1px solid #475569;border-radius:9px;background:#0f172a;color:#fff;font-size:22px;font-weight:800}.qty input{width:100%;padding:10px;border:1px solid #475569;border-radius:9px;background:#0f172a;color:#fff;text-align:center;font-size:17px;font-weight:800}
     .summary{position:fixed;left:0;right:0;bottom:0;margin:auto;max-width:620px;padding:14px 18px;background:rgba(6,78,59,.98);border:1px solid #10b981;border-radius:16px 16px 0 0;box-shadow:0 -8px 25px rgba(0,0,0,.35)}.sumrow{display:flex;justify-content:space-between;margin-top:5px;color:#d1fae5;font-size:13px}.total{font-size:27px;color:#fff}.empty{padding:16px 8px;text-align:center;color:#64748b;font-size:13px;line-height:1.7}
     @media(max-width:380px){.row{display:block}.search-btn{width:100%;margin-top:8px}.price-grid{grid-template-columns:1fr}}
+    .price-btn.retail {
+  border-color: #a78bfa;
+  background: #4c1d95;
+  color: #ede9fe;
+}
   </style>
 </head>
 <body>
@@ -87,14 +92,79 @@ const GAS_API_URL="https://script.google.com/macros/s/AKfycbwLlT9NxW6-wJDakrSP8w
 const CAMERA_KEY="estimatePreferredCamera", TAX_RATE=.10;
 let estimateItems=new Map(),priceType="normal",scanner=null,cameraRunning=false,cameras=[],scanLocked=false,lastJan="",activeRequest=0;
 
-function setPriceType(type){priceType=type==="premium"?"premium":"normal";normalBtn.className="price-btn"+(priceType==="normal"?" normal":"");premiumBtn.className="price-btn"+(priceType==="premium"?" premium":"");renderEstimate();}
+function setPriceType(type) {
+
+  if (
+    type !== "normal" &&
+    type !== "premium" &&
+    type !== "retail"
+  ) {
+    type = "normal";
+  }
+
+  priceType = type;
+
+  normalBtn.className =
+    "price-btn" +
+    (priceType === "normal" ? " normal" : "");
+
+  premiumBtn.className =
+    "price-btn" +
+    (priceType === "premium" ? " premium" : "");
+
+  retailBtn.className =
+    "price-btn" +
+    (priceType === "retail" ? " retail" : "");
+
+  renderEstimate();
+}
 function normalizeJan(v){return String(v||"").replace(/\D/g,"").trim()}
 function parsePrice(v){const n=Number(String(v||"").replace(/,/g,"").replace(/[¥円]/g,"").replace(/[^\d.-]/g,""));return Number.isFinite(n)?n:0}
 function formatPrice(v){return "¥"+Math.round(Number(v||0)).toLocaleString("ja-JP")}
 function escapeHtml(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
 function safeJs(v){return String(v??"").replace(/\\/g,"\\\\").replace(/'/g,"\\'").replace(/[\r\n]/g,"")}
-function getPrice(p){const selected=priceType==="premium"?p.premiumPrice:p.normalPrice;return parsePrice(selected||p.normalPrice||p.retailPrice||0)}
-function priceLabel(){return priceType==="premium"?"プレミアム会員価格":"通常下代"}
+function getPrice(p) {
+
+  // 自由入力商品は入力した単価を固定
+  if (p.manual) {
+    return parsePrice(
+      p.normalPrice || 0
+    );
+  }
+
+  // 上代
+  if (priceType === "retail") {
+    return parsePrice(
+      p.retailPrice || 0
+    );
+  }
+
+  // プレミアム会員価格
+  if (priceType === "premium") {
+    return parsePrice(
+      p.premiumPrice ||
+      p.normalPrice ||
+      0
+    );
+  }
+
+  // 通常下代
+  return parsePrice(
+    p.normalPrice || 0
+  );
+}
+function priceLabel() {
+
+  if (priceType === "retail") {
+    return "上代";
+  }
+
+  if (priceType === "premium") {
+    return "プレミアム会員価格";
+  }
+
+  return "通常下代";
+}
 
 function searchProducts(){const q=searchInput.value.trim();if(!q){showMessage("検索文字を入力してください。",true);return}const token=++activeRequest;searchResults.innerHTML='<div class="notice">商品を検索しています...</div>';jsonp({action:"search",q},data=>{if(token!==activeRequest)return;if(!data||data.error||data.success===false){showMessage(data?.message||"検索できませんでした。",true);return}const products=data.products||[];if(data.exact&&products.length===1){addProduct(products[0]);searchInput.value="";return}renderCandidates(products,q);},()=>showMessage("商品検索APIへ接続できませんでした。",true));}
 function renderCandidates(products,q){if(!products.length){showMessage(`「${q}」に該当する商品がありません。`,true);return}searchResults.innerHTML='<div class="help">検索結果 '+products.length+'件</div>'+products.map(p=>`<div class="candidate"><div class="maker">${escapeHtml(p.maker||"")}</div><div class="name">${escapeHtml(p.name||"")}</div><div class="meta">品番：${escapeHtml(p.productCode||"-")}<br>JAN：${escapeHtml(p.jan||"-")}</div><div class="candidate-price">${priceLabel()}：${formatPrice(getPrice(p))}</div><button class="add-btn" onclick='addCandidate(${JSON.stringify(JSON.stringify(p))})'>見積に追加</button></div>`).join("")}
