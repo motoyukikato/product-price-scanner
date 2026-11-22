@@ -11,6 +11,24 @@
 *{box-sizing:border-box}html,body,button,a,input,select,textarea{touch-action:manipulation}body{margin:0;padding:16px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;background:#0f172a;color:#fff;-webkit-text-size-adjust:100%}.container{max-width:620px;margin:auto;padding-bottom:190px}.top{display:flex;justify-content:space-between;gap:8px;margin-bottom:14px}.link,.clear{padding:10px 12px;border-radius:10px;font-size:13px;font-weight:700}.link{border:1px solid #475569;color:#cbd5e1;text-decoration:none}.clear{border:1px solid #ef4444;background:transparent;color:#fca5a5}h1{margin:0 0 5px;font-size:29px}.subtitle{color:#94a3b8;margin-bottom:16px;line-height:1.6}.panel{margin-top:14px;padding:15px;border:1px solid #334155;border-radius:16px;background:#111827}.title{font-size:16px;font-weight:800;margin-bottom:11px}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:default}.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.price-btn{padding:14px 8px;border:1px solid #475569;border-radius:11px;background:#1e293b;color:#cbd5e1;font-weight:800}.price-btn.normal{border-color:#38bdf8;background:#0c4a6e;color:#e0f2fe}.price-btn.premium{border-color:#f59e0b;background:#422006;color:#fde68a}.price-btn.retail{border-color:#a78bfa;background:#4c1d95;color:#ede9fe}.row{display:flex;gap:8px}.search-input,.manual-input,.pdfInput,.pdfTextarea{width:100%;min-width:0;padding:14px;border:1px solid #475569;border-radius:10px;background:#1e293b;color:#fff;font-size:16px;outline:none}.search-btn,.green-btn{padding:14px 18px;border:0;border-radius:10px;background:#10b981;color:#052e25;font-weight:800}.help{color:#64748b;font-size:12px;line-height:1.6;margin-top:8px}.camera-btn{width:100%;margin-top:11px;padding:15px;border:0;border-radius:12px;background:#2563eb;color:#fff;font-weight:800}.settings-btn{width:100%;margin-top:9px;padding:11px;border:1px solid #475569;border-radius:10px;background:#1e293b;color:#cbd5e1;font-weight:700}#reader{display:none;margin-top:12px;border:2px solid #10b981;border-radius:15px;overflow:hidden;background:#000}#reader video{width:100%!important}#cameraSettings,#manualForm{display:none;margin-top:10px;padding:13px;border:1px solid #475569;border-radius:12px;background:#0f172a}#cameraMessage{color:#94a3b8;font-size:13px;line-height:1.6;margin-top:9px;white-space:pre-wrap}.manual-toggle{width:100%;margin-top:13px;padding:14px;border:1px dashed #f59e0b;border-radius:11px;background:#422006;color:#fde68a;font-weight:800}.manual-label,.pdfInputLabel{display:block;margin:10px 0 5px;color:#cbd5e1;font-size:13px}.manual-add,.createPdfButton{width:100%;margin-top:13px;padding:14px;border:0;border-radius:10px;background:#f59e0b;color:#422006;font-weight:800}.notice,.error{margin-top:10px;padding:13px;border-radius:11px;font-size:13px;line-height:1.6}.notice{background:#1e293b;color:#cbd5e1}.error{border:1px solid #ef4444;background:#450a0a;color:#fecaca}.candidate,.item{margin-top:9px;padding:14px;border:1px solid #334155;border-radius:13px;background:#1e293b}.maker,.meta{color:#94a3b8;font-size:12px;line-height:1.6}.name{margin-top:3px;font-size:17px;font-weight:800;line-height:1.4}.candidate-price{margin-top:8px;color:#a7f3d0;font-weight:800}.add-btn{width:100%;margin-top:10px;padding:11px;border:0;border-radius:9px;background:#10b981;color:#052e25;font-weight:800}.item-top{display:flex;justify-content:space-between;gap:12px}.remove{height:34px;padding:0 10px;border:1px solid #ef4444;border-radius:8px;background:transparent;color:#fca5a5;font-weight:700}.price-line,.subtotal{display:flex;justify-content:space-between;align-items:center;margin-top:11px;padding-top:10px;border-top:1px solid #334155}.unit,.subtotal strong{font-size:20px;font-weight:800}.qty{display:grid;grid-template-columns:44px 1fr 44px;gap:8px;margin-top:12px}.qty button{border:1px solid #475569;border-radius:9px;background:#0f172a;color:#fff;font-size:22px;font-weight:800}.qty input{width:100%;padding:10px;border:1px solid #475569;border-radius:9px;background:#0f172a;color:#fff;text-align:center;font-size:17px;font-weight:800}.summary{position:fixed;left:0;right:0;bottom:0;margin:auto;max-width:620px;padding:14px 18px;background:rgba(6,78,59,.98);border:1px solid #10b981;border-radius:16px 16px 0 0;box-shadow:0 -8px 25px rgba(0,0,0,.35);z-index:10}.sumrow{display:flex;justify-content:space-between;margin-top:5px;color:#d1fae5;font-size:13px}.total{font-size:27px;color:#fff}.empty{padding:16px 8px;text-align:center;color:#64748b;font-size:13px;line-height:1.7}.pdfTextarea{min-height:90px;resize:vertical}.pdfMessage{margin-top:10px;color:#cbd5e1;font-size:13px}.pdfHint{margin-top:8px;color:#64748b;font-size:11px;line-height:1.6}
 #pdfDocument{position:fixed;top:0;left:0;visibility:hidden;pointer-events:none;z-index:-1;width:794px;min-height:1123px;padding:55px;background:#fff;color:#111827;font-family:"Noto Sans JP","Segoe UI",sans-serif}.pdfHeader{display:flex;justify-content:space-between;gap:30px;padding-bottom:20px;border-bottom:3px solid #1e293b}.pdfDocumentTitle{font-size:30px;font-weight:700;letter-spacing:8px}.pdfCustomerDisplay{min-width:330px;margin-top:25px;padding-bottom:6px;border-bottom:1px solid #64748b;font-size:18px;font-weight:700}.pdfHeaderRight{font-size:12px;line-height:1.9;text-align:right}.pdfTotalBox{display:flex;justify-content:space-between;align-items:center;margin:25px 0 20px;padding:15px 18px;border:2px solid #1e293b}.pdfGrandTotal{font-size:28px;font-weight:700}.pdfTable{width:100%;border-collapse:collapse;font-size:11px}.pdfTable th{padding:9px 7px;border:1px solid #64748b;background:#e2e8f0}.pdfTable td{padding:9px 7px;border:1px solid #94a3b8}.pdfTable tr{break-inside:avoid;page-break-inside:avoid}.pdfCellCenter{text-align:center}.pdfCellRight{text-align:right}.pdfSummary{width:290px;margin:18px 0 0 auto}.pdfSummaryRow{display:flex;justify-content:space-between;padding:7px 4px;border-bottom:1px solid #cbd5e1;font-size:12px}.pdfSummaryTotal{border-bottom:3px double #1e293b;font-size:16px}.pdfInformation{margin-top:28px;padding:14px;border:1px solid #94a3b8;font-size:11px;line-height:1.7}.pdfNoteDisplay{min-height:35px;white-space:pre-wrap}.pdfFooter{margin-top:25px;color:#64748b;font-size:9px;text-align:center}
 @media(max-width:420px){.row{display:block}.search-btn{width:100%;margin-top:8px}.price-grid{grid-template-columns:1fr}}
+.pdfOpenLink {
+  display: none;
+
+  width: 100%;
+  margin-top: 12px;
+  padding: 15px;
+
+  border-radius: 10px;
+
+  background: #10b981;
+  color: #052e25;
+
+  text-align: center;
+  text-decoration: none;
+
+  font-size: 16px;
+  font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -22,7 +40,15 @@
 <button class="manual-toggle" onclick="toggleManualForm()">＋ 商品マスターにない商品を追加</button>
 <div id="manualForm"><div class="title">商品を自由入力</div><label class="manual-label">商品名</label><input id="manualName" class="manual-input" placeholder="例：特注ガラスベース"><label class="manual-label">品番・メモ</label><input id="manualCode" class="manual-input" placeholder="例：別注品"><label class="manual-label">通常下代</label><input id="manualNormalPrice" class="manual-input" type="number" inputmode="numeric" min="0" placeholder="例：1500"><label class="manual-label">プレミアム会員価格</label><input id="manualPremiumPrice" class="manual-input" type="number" inputmode="numeric" min="0" placeholder="例：1425"><label class="manual-label">上代</label><input id="manualRetailPrice" class="manual-input" type="number" inputmode="numeric" min="0" placeholder="例：3000"><button class="manual-add" onclick="addManualProduct()">見積に追加して続ける</button></div><div id="searchResults"></div></div>
 <div class="panel"><div class="title">見積商品 <span id="itemCount" class="maker">0商品</span></div><div id="empty" class="empty">商品がまだ追加されていません。</div><div id="items"></div></div>
-<div class="panel"><div class="title">見積書を作成</div><label class="pdfInputLabel">見積先名</label><input id="pdfCustomerName" class="pdfInput" placeholder="例：〇〇フラワー 御中"><label class="pdfInputLabel">発行元</label><input id="pdfIssuerName" class="pdfInput" placeholder="例：〇〇フラワー"><label class="pdfInputLabel">見積日</label><input id="pdfEstimateDate" class="pdfInput" type="date"><label class="pdfInputLabel">見積有効期限</label><input id="pdfValidity" class="pdfInput" value="発行日より30日間"><label class="pdfInputLabel">備考</label><textarea id="pdfNote" class="pdfTextarea" placeholder="納期、送料、その他の条件など"></textarea><button id="createPdfButton" class="createPdfButton" onclick="createEstimatePdf()">見積書PDFを作成</button><div id="pdfMessage" class="pdfMessage"></div><div class="pdfHint">PDFには価格区分名を表示せず「単価」と表示します。</div></div>
+<div class="panel"><div class="title">見積書を作成</div><label class="pdfInputLabel">見積先名</label><input id="pdfCustomerName" class="pdfInput" placeholder="例：〇〇フラワー 御中"><label class="pdfInputLabel">発行元</label><input id="pdfIssuerName" class="pdfInput" placeholder="例：〇〇フラワー"><label class="pdfInputLabel">見積日</label><input id="pdfEstimateDate" class="pdfInput" type="date"><label class="pdfInputLabel">見積有効期限</label><input id="pdfValidity" class="pdfInput" value="発行日より30日間"><label class="pdfInputLabel">備考</label><textarea id="pdfNote" class="pdfTextarea" placeholder="納期、送料、その他の条件など"></textarea><button id="createPdfButton" class="createPdfButton" onclick="createEstimatePdf()">見積書PDFを作成</button><div id="pdfMessage" class="pdfMessage"></div><a
+  id="pdfOpenLink"
+  class="pdfOpenLink"
+  href="#"
+  target="_blank"
+  rel="noopener"
+>
+  作成したPDFを開く・保存する
+</a><div class="pdfHint">PDFには価格区分名を表示せず「単価」と表示します。</div></div>
 <div id="pdfDocument"><div class="pdfHeader"><div><div class="pdfDocumentTitle">御 見 積 書</div><div id="pdfCustomerDisplay" class="pdfCustomerDisplay"></div></div><div class="pdfHeaderRight"><div id="pdfDateDisplay"></div><div id="pdfIssuerDisplay"></div></div></div><div class="pdfTotalBox"><strong>お見積金額（税込）</strong><div id="pdfGrandTotal" class="pdfGrandTotal">¥0</div></div><table class="pdfTable"><thead><tr><th style="width:40px">No.</th><th style="width:110px">品番</th><th>商品名</th><th style="width:55px">数量</th><th style="width:90px">単価</th><th style="width:90px">金額</th></tr></thead><tbody id="pdfItemRows"></tbody></table><div class="pdfSummary"><div class="pdfSummaryRow"><span>税抜合計</span><strong id="pdfSubtotal">¥0</strong></div><div class="pdfSummaryRow"><span>消費税10%</span><strong id="pdfTax">¥0</strong></div><div class="pdfSummaryRow pdfSummaryTotal"><span>税込合計</span><strong id="pdfTotal">¥0</strong></div></div><div class="pdfInformation"><div>見積有効期限：<span id="pdfValidityDisplay"></span></div><div style="margin-top:10px;font-weight:700">備考</div><div id="pdfNoteDisplay" class="pdfNoteDisplay"></div></div><div class="pdfFooter">本見積書は商品価格検索・見積システムから作成されました。</div></div>
 </div>
 <div class="summary"><div class="sumrow"><span>商品点数 / 合計数量</span><strong id="countSummary">0点 / 0個</strong></div><div class="sumrow"><span>税抜合計</span><strong id="subtotalSummary">¥0</strong></div><div class="sumrow"><span>消費税10%</span><strong id="taxSummary">¥0</strong></div><div class="sumrow"><span>税込合計</span><strong id="totalSummary" class="total">¥0</strong></div></div>
@@ -50,12 +76,16 @@ function initializePdfDate(){if(el("pdfEstimateDate")&&!el("pdfEstimateDate").va
 async function createEstimatePdf() {
 
   if (typeof html2pdf === "undefined") {
-    alert("PDF機能を読み込めませんでした。ページを再読み込みしてください。");
+    alert(
+      "PDF機能を読み込めませんでした。ページを再読み込みしてください。"
+    );
     return;
   }
 
   if (!estimateItems.size) {
-    alert("見積商品を追加してください。");
+    alert(
+      "見積商品を追加してください。"
+    );
     return;
   }
 
@@ -65,72 +95,11 @@ async function createEstimatePdf() {
       .trim();
 
   if (!customer) {
-    alert("見積先名を入力してください。");
-    return;
-  }
-
-
-  /*
-   * iPhone Safari対策
-   * PDF生成前、ボタンを押した直後に新規タブを確保します。
-   */
-  const pdfWindow =
-    window.open("about:blank", "_blank");
-
-
-  if (!pdfWindow) {
-
     alert(
-      "PDF表示がブロックされました。\n" +
-      "iPhoneの「設定」→「アプリ」→「Safari」から、" +
-      "「ポップアップブロック」を一時的にオフにしてください。"
+      "見積先名を入力してください。"
     );
-
     return;
   }
-
-
-  pdfWindow.document.open();
-
-  pdfWindow.document.write(`
-    <!DOCTYPE html>
-
-    <html lang="ja">
-
-    <head>
-      <meta charset="UTF-8">
-
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1"
-      >
-
-      <title>見積書作成中</title>
-    </head>
-
-    <body style="
-      margin:0;
-      padding:40px 20px;
-      font-family:-apple-system,BlinkMacSystemFont,sans-serif;
-      text-align:center;
-      background:#ffffff;
-      color:#111827;
-    ">
-
-      <h2>
-        見積書を作成しています
-      </h2>
-
-      <p>
-        この画面を閉じずにお待ちください。
-      </p>
-
-    </body>
-
-    </html>
-  `);
-
-  pdfWindow.document.close();
 
 
   let subtotal = 0;
@@ -144,16 +113,15 @@ async function createEstimatePdf() {
           const product =
             item.product;
 
-          const quantity =
-            item.quantity;
-
           const unitPrice =
             getPrice(product);
 
           const itemTotal =
-            unitPrice * quantity;
+            unitPrice *
+            item.quantity;
 
-          subtotal += itemTotal;
+          subtotal +=
+            itemTotal;
 
 
           return `
@@ -177,7 +145,7 @@ async function createEstimatePdf() {
               </td>
 
               <td class="pdfCellCenter">
-                ${quantity}
+                ${item.quantity}
               </td>
 
               <td class="pdfCellRight">
@@ -199,11 +167,14 @@ async function createEstimatePdf() {
 
   const tax =
     Math.floor(
-      subtotal * TAX_RATE
+      subtotal *
+      TAX_RATE
     );
 
+
   const total =
-    subtotal + tax;
+    subtotal +
+    tax;
 
 
   el("pdfCustomerDisplay")
@@ -228,7 +199,8 @@ async function createEstimatePdf() {
     .textContent =
     "見積日：" +
     formatPdfDate(
-      el("pdfEstimateDate").value
+      el("pdfEstimateDate")
+        .value
     );
 
 
@@ -269,67 +241,85 @@ async function createEstimatePdf() {
   const button =
     el("createPdfButton");
 
+
   const message =
     el("pdfMessage");
 
-  const originalDocument =
+
+  const openLink =
+    el("pdfOpenLink");
+
+
+  const source =
     el("pdfDocument");
 
 
-  button.disabled = true;
+  button.disabled =
+    true;
+
 
   button.textContent =
     "PDFを作成しています...";
+
 
   message.textContent =
     "PDFを生成しています...";
 
 
-  /*
-   * visibility:hiddenの要素を直接変換すると、
-   * iPhoneでPDFが空白になる場合があります。
-   *
-   * PDFテンプレートを複製し、
-   * 画面の下層へ一時的に配置して変換します。
-   */
-  const pdfClone =
-    originalDocument.cloneNode(true);
-
-
-  pdfClone.removeAttribute("id");
-
-  pdfClone.style.position =
-    "fixed";
-
-  pdfClone.style.top =
-    "0";
-
-  pdfClone.style.left =
-    "0";
-
-  pdfClone.style.width =
-    "794px";
-
-  pdfClone.style.minHeight =
-    "1123px";
-
-  pdfClone.style.visibility =
-    "visible";
-
-  pdfClone.style.opacity =
-    "1";
-
-  pdfClone.style.pointerEvents =
+  openLink.style.display =
     "none";
 
-  pdfClone.style.zIndex =
-    "-9999";
 
-  pdfClone.style.background =
-    "#ffffff";
+  /*
+   * PDFテンプレートを複製し、
+   * 描画できる状態にします。
+   */
+  const pdfClone =
+    source.cloneNode(true);
 
-  pdfClone.style.color =
-    "#111827";
+
+  pdfClone.removeAttribute(
+    "id"
+  );
+
+
+  Object.assign(
+    pdfClone.style,
+    {
+      position:
+        "fixed",
+
+      top:
+        "0",
+
+      left:
+        "0",
+
+      width:
+        "794px",
+
+      minHeight:
+        "1123px",
+
+      visibility:
+        "visible",
+
+      opacity:
+        "1",
+
+      pointerEvents:
+        "none",
+
+      zIndex:
+        "-1",
+
+      background:
+        "#ffffff",
+
+      color:
+        "#111827"
+    }
+  );
 
 
   document.body.appendChild(
@@ -339,17 +329,24 @@ async function createEstimatePdf() {
 
   try {
 
-    /*
-     * フォントとレイアウトの反映を待ちます。
-     */
-    if (document.fonts && document.fonts.ready) {
+    if (
+      document.fonts &&
+      document.fonts.ready
+    ) {
+
       await document.fonts.ready;
+
     }
 
 
     await new Promise(
       function(resolve) {
-        setTimeout(resolve, 300);
+
+        setTimeout(
+          resolve,
+          300
+        );
+
       }
     );
 
@@ -424,51 +421,93 @@ async function createEstimatePdf() {
 
 
     const pdf =
-      await worker.get("pdf");
+      await worker.get(
+        "pdf"
+      );
 
 
     const pdfBlob =
-      pdf.output("blob");
+      pdf.output(
+        "blob"
+      );
 
 
     const pdfUrl =
-      URL.createObjectURL(pdfBlob);
+      URL.createObjectURL(
+        pdfBlob
+      );
 
 
     /*
-     * ボタンを押した瞬間に確保したタブへPDFを表示
+     * 前回作成したPDFがあれば解放
      */
-    pdfWindow.location.replace(
-      pdfUrl
-    );
+    if (
+      window.currentEstimatePdfUrl
+    ) {
+
+      URL.revokeObjectURL(
+        window.currentEstimatePdfUrl
+      );
+
+    }
+
+
+    window.currentEstimatePdfUrl =
+      pdfUrl;
+
+
+    const safeCustomer =
+      customer
+
+        .replace(
+          /[\\/:*?"<>|]/g,
+          "_"
+        )
+
+        .slice(
+          0,
+          30
+        );
+
+
+    const fileDate =
+      new Date()
+
+        .toISOString()
+
+        .slice(0, 10)
+
+        .replace(
+          /-/g,
+          ""
+        );
+
+
+    openLink.href =
+      pdfUrl;
+
+
+    openLink.download =
+      "見積書_" +
+      fileDate +
+      "_" +
+      safeCustomer +
+      ".pdf";
+
+
+    openLink.style.display =
+      "block";
 
 
     message.textContent =
-      "見積書PDFを開きました。共有ボタンから保存できます。";
-
-
-    setTimeout(
-      function() {
-
-        URL.revokeObjectURL(
-          pdfUrl
-        );
-
-      },
-      120000
-    );
+      "PDFを作成しました。下の緑色ボタンをタップしてください。";
 
 
   } catch (error) {
 
-    console.error(error);
-
-
-    try {
-      pdfWindow.close();
-    } catch (closeError) {
-      console.error(closeError);
-    }
+    console.error(
+      error
+    );
 
 
     message.textContent =
@@ -482,21 +521,27 @@ async function createEstimatePdf() {
 
 
     alert(
-      "PDFを作成できませんでした。\n" +
-      "ページを再読み込みして、もう一度お試しください。"
+      "PDFを作成できませんでした。"
     );
 
 
   } finally {
 
-    if (pdfClone.parentNode) {
-      pdfClone.parentNode.removeChild(
-        pdfClone
-      );
+    if (
+      pdfClone.parentNode
+    ) {
+
+      pdfClone.parentNode
+        .removeChild(
+          pdfClone
+        );
+
     }
 
 
-    button.disabled = false;
+    button.disabled =
+      false;
+
 
     button.textContent =
       "見積書PDFを作成";
