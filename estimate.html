@@ -25,10 +25,41 @@
   <div class="top"><a class="link" href="./index.html">商品価格検索へ戻る</a><button class="clear" onclick="clearEstimate()">見積を全削除</button></div>
   <h1>かんたん見積</h1><div class="subtitle">JAN・品番・品名・メーカーから商品を検索できます</div>
 
-  <div class="panel"><div class="title">見積価格</div><div class="price-grid">
-    <button id="normalBtn" class="price-btn normal" onclick="setPriceType('normal')">通常下代</button>
-    <button id="premiumBtn" class="price-btn" onclick="setPriceType('premium')">プレミアム会員価格</button>
-  </div></div>
+  <div class="panel">
+
+  <div class="title">
+    見積価格
+  </div>
+
+  <div class="price-grid">
+
+    <button
+      id="normalBtn"
+      class="price-btn normal"
+      onclick="setPriceType('normal')"
+    >
+      通常下代
+    </button>
+
+    <button
+      id="premiumBtn"
+      class="price-btn"
+      onclick="setPriceType('premium')"
+    >
+      プレミアム会員価格
+    </button>
+
+    <button
+      id="retailBtn"
+      class="price-btn"
+      onclick="setPriceType('retail')"
+    >
+      上代
+    </button>
+
+  </div>
+
+</div>
 
   <div class="panel"><div class="title">商品を追加</div>
     <div class="row"><input id="searchInput" class="search-input" placeholder="JAN・品番・品名・メーカー" autocomplete="off"><button class="search-btn" onclick="searchProducts()">検索</button></div>
