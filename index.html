@@ -41,6 +41,7 @@
       width: 100%;
       max-width: 520px;
       margin: auto;
+      padding-bottom: 30px;
     }
 
     h1 {
@@ -49,13 +50,18 @@
     }
 
     .subtitle {
-      margin-bottom: 18px;
+      margin-bottom: 17px;
       color: #94a3b8;
       line-height: 1.6;
     }
 
-    button {
+    button,
+    input,
+    select {
       font-family: inherit;
+    }
+
+    button {
       cursor: pointer;
     }
 
@@ -64,80 +70,28 @@
       opacity: 0.55;
     }
 
-    .masterStatus {
-      margin-bottom: 16px;
-      padding: 14px;
+    .estimateLink {
+      display: block;
 
-      border: 1px solid #334155;
+      width: 100%;
+      margin-bottom: 18px;
+      padding: 16px;
+
+      border: 1px solid #f59e0b;
       border-radius: 14px;
 
-      background: #111827;
-    }
+      background: #422006;
+      color: #fde68a;
 
-    .masterStatusTop {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
+      text-align: center;
+      text-decoration: none;
 
-    .masterStatusTitle {
-      font-size: 14px;
+      font-size: 17px;
       font-weight: bold;
     }
 
-    .statusBadge {
-      flex-shrink: 0;
-
-      padding: 5px 9px;
-
-      border-radius: 999px;
-
-      background: #334155;
-      color: #cbd5e1;
-
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .statusBadge.loading {
-      background: #1e3a8a;
-      color: #bfdbfe;
-    }
-
-    .statusBadge.ready {
-      background: #064e3b;
-      color: #a7f3d0;
-    }
-
-    .statusBadge.error {
-      background: #450a0a;
-      color: #fecaca;
-    }
-
-    .masterDetail {
-      margin-top: 8px;
-
-      color: #94a3b8; 
-
-      font-size: 12px;
-      line-height: 1.6;
-    }
-
-    .refreshButton {
-      width: 100%;
-
-      margin-top: 10px;
-      padding: 11px;
-
-      border: 1px solid #475569;
-      border-radius: 10px;
-
-      background: #1e293b;
-      color: white;
-
-      font-size: 14px;
-      font-weight: bold;
+    .estimateLink:active {
+      transform: scale(0.98);
     }
 
     .cameraButton {
@@ -213,6 +167,7 @@
 
     .settingsTitle {
       margin-bottom: 11px;
+
       font-size: 16px;
       font-weight: bold;
     }
@@ -331,6 +286,19 @@
       font-weight: bold;
     }
 
+    .searchingCard {
+      margin-top: 18px;
+      padding: 16px;
+
+      border-radius: 12px;
+
+      background: #1e293b;
+      color: #cbd5e1;
+
+      text-align: center;
+      line-height: 1.7;
+    }
+
     .productCard {
       margin-top: 20px;
     }
@@ -395,32 +363,6 @@
       color: #fbbf24;
     }
 
-    .lotCard {
-      margin-top: 12px;
-      padding: 14px;
-
-      border: 1px solid #334155;
-      border-radius: 12px;
-
-      background: #111827;
-      color: #cbd5e1;
-
-      font-size: 14px;
-    }
-
-    .searchingCard {
-      margin-top: 18px;
-      padding: 16px;
-
-      border-radius: 12px;
-
-      background: #1e293b;
-      color: #cbd5e1;
-
-      text-align: center;
-      line-height: 1.7;
-    }
-
     .errorCard {
       margin-top: 18px;
       padding: 16px;
@@ -450,7 +392,7 @@
       font-weight: bold;
     }
 
-    .privacyNote {
+    .dataNote {
       margin-top: 18px;
 
       color: #64748b;
@@ -459,29 +401,17 @@
       line-height: 1.7;
       text-align: center;
     }
-    .estimateLink {
-  display: block;
 
-  width: 100%;
-  margin-bottom: 16px;
-  padding: 15px;
+    @media (max-width: 380px) {
+      .manualRow {
+        display: block;
+      }
 
-  border: 1px solid #f59e0b;
-  border-radius: 14px;
-
-  background: #422006;
-  color: #fde68a;
-
-  text-align: center;
-  text-decoration: none;
-
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.estimateLink:active {
-  transform: scale(0.98);
-}
+      .searchButton {
+        width: 100%;
+        margin-top: 8px;
+      }
+    }
   </style>
 </head>
 
@@ -489,65 +419,31 @@
 
 <div class="container">
 
- <h1>商品価格検索</h1>
+  <h1>商品価格検索</h1>
 
-<div class="subtitle">
-  JANバーコードを読み取ると、商品価格をすぐに表示します
-</div>
-
-<a
-  href="./estimate.html"
-  class="estimateLink"
->
-  🧾 見積を作成する
-</a>
-
-<div class="masterStatus">
-    <div class="masterStatusTop">
-
-      <div class="masterStatusTitle">
-        商品情報
-      </div>
-
-      <div
-        id="masterBadge"
-        class="statusBadge loading"
-      >
-        読込中
-      </div>
-
-    </div>
-
-    <div
-      id="masterDetail"
-      class="masterDetail"
-    >
-      商品マスターを読み込んでいます...
-    </div>
-
-    <button
-      id="refreshMasterButton"
-      class="refreshButton"
-      onclick="loadProductMaster(true)"
-    >
-      最新の商品情報に更新
-    </button>
-
+  <div class="subtitle">
+    JANバーコードを読み取ると、商品価格をすぐに表示します
   </div>
+
+  <a
+    href="./estimate.html"
+    class="estimateLink"
+  >
+    🧾 見積を作成する
+  </a>
 
   <button
     id="cameraButton"
     class="cameraButton"
     onclick="toggleCamera()"
-    disabled
   >
-    商品情報を準備しています...
+    カメラを起動
   </button>
 
   <div id="reader"></div>
 
   <div id="message">
-    商品マスターの読込み完了後にカメラを使用できます。
+    カメラを起動するか、JANコードを入力してください。
   </div>
 
   <button
@@ -609,10 +505,8 @@
       >
 
       <button
-        id="searchButton"
         class="searchButton"
         onclick="searchFromInput()"
-        disabled
       >
         検索
       </button>
@@ -623,8 +517,9 @@
 
   <div id="result"></div>
 
-  <div class="privacyNote">
-    商品情報はページを開いている間だけ一時的に使用し、端末内には保存しません。
+  <div class="dataNote">
+    商品マスター全体は端末に読み込みません。
+    検索した商品の情報だけを取得します。
   </div>
 
 </div>
@@ -636,334 +531,15 @@
   const CAMERA_STORAGE_KEY =
     "productPricePreferredCamera";
 
-  const INACTIVITY_LIMIT =
-    15 * 60 * 1000;
-
-  let productMaster = null;
-  let productCount = 0;
-  let masterUpdatedAt = "";
-  let masterLoading = false;
-
   let scanner = null;
   let cameraRunning = false;
   let scanLocked = false;
   let cameras = [];
-
-  let inactivityTimer = null;
   let lastScannedJan = "";
-
-
-  document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-      registerActivityEvents();
-
-      resetInactivityTimer();
-
-      loadProductMaster(false);
-
-    }
-  );
-
-
-  function loadProductMaster(forceRefresh) {
-
-    if (masterLoading) {
-      return;
-    }
-
-
-    masterLoading = true;
-
-
-    setMasterStatus(
-      "loading",
-      "読込中",
-      forceRefresh
-        ? "最新の商品情報を取得しています..."
-        : "商品マスターを読み込んでいます..."
-    );
-
-
-    document
-      .getElementById("cameraButton")
-      .disabled =
-      true;
-
-
-    document
-      .getElementById("cameraButton")
-      .innerText =
-      "商品情報を準備しています...";
-
-
-    document
-      .getElementById("searchButton")
-      .disabled =
-      true;
-
-
-    const callbackName =
-      "masterCallback_" +
-      Date.now();
-
-
-    const script =
-      document.createElement("script");
-
-
-    const timeoutId =
-      setTimeout(
-        function() {
-
-          cleanupJsonp(
-            callbackName,
-            script
-          );
-
-
-          masterLoading = false;
-
-
-          setMasterStatus(
-            "error",
-            "エラー",
-            "商品情報の読込みがタイムアウトしました。通信状態を確認して更新してください。"
-          );
-
-
-          document
-            .getElementById("cameraButton")
-            .innerText =
-            "商品情報を再読込してください";
-
-        },
-        30000
-      );
-
-
-    window[callbackName] =
-      function(data) {
-
-        clearTimeout(timeoutId);
-
-
-        cleanupJsonp(
-          callbackName,
-          script
-        );
-
-
-        masterLoading = false;
-
-
-        if (
-          !data ||
-          data.error ||
-          !data.success ||
-          !data.products
-        ) {
-
-          productMaster = null;
-          productCount = 0;
-
-
-          setMasterStatus(
-            "error",
-            "エラー",
-            data && data.message
-              ? data.message
-              : "商品情報を取得できませんでした。"
-          );
-
-
-          document
-            .getElementById("cameraButton")
-            .innerText =
-            "商品情報を再読込してください";
-
-
-          return;
-
-        }
-
-
-        productMaster =
-          data.products;
-
-
-        productCount =
-          Number(data.count || 0);
-
-
-        masterUpdatedAt =
-          data.updatedAt || "";
-
-
-        setMasterStatus(
-          "ready",
-          "準備完了",
-          productCount.toLocaleString("ja-JP") +
-          "商品を読み込みました" +
-          (
-            masterUpdatedAt
-              ? "｜更新：" + masterUpdatedAt
-              : ""
-          )
-        );
-
-
-        document
-          .getElementById("cameraButton")
-          .disabled =
-          false;
-
-
-        document
-          .getElementById("cameraButton")
-          .innerText =
-          "カメラを起動";
-
-
-        document
-          .getElementById("searchButton")
-          .disabled =
-          false;
-
-
-        document
-          .getElementById("message")
-          .innerText =
-          "商品情報の準備ができました。カメラを起動してください。";
-
-
-        resetInactivityTimer();
-
-      };
-
-
-    script.onerror =
-      function() {
-
-        clearTimeout(timeoutId);
-
-
-        cleanupJsonp(
-          callbackName,
-          script
-        );
-
-
-        masterLoading = false;
-
-        productMaster = null;
-        productCount = 0;
-
-
-        setMasterStatus(
-          "error",
-          "エラー",
-          "商品情報APIへ接続できませんでした。"
-        );
-
-      };
-
-
-    script.src =
-      GAS_API_URL +
-      "?action=master" +
-      "&callback=" +
-      encodeURIComponent(callbackName) +
-      "&t=" +
-      Date.now();
-
-
-    document
-      .body
-      .appendChild(script);
-
-  }
-
-
-  function setMasterStatus(
-    status,
-    badgeText,
-    detailText
-  ) {
-
-    const badge =
-      document.getElementById(
-        "masterBadge"
-      );
-
-
-    badge.className =
-      "statusBadge " +
-      status;
-
-
-    badge.innerText =
-      badgeText;
-
-
-    document
-      .getElementById("masterDetail")
-      .innerText =
-      detailText;
-
-  }
-
-
-  function cleanupJsonp(
-    callbackName,
-    script
-  ) {
-
-    try {
-
-      delete window[callbackName];
-
-    } catch (error) {
-
-      window[callbackName] =
-        undefined;
-
-    }
-
-
-    if (
-      script &&
-      script.parentNode
-    ) {
-
-      script.parentNode
-        .removeChild(script);
-
-    }
-
-  }
+  let activeSearchToken = 0;
 
 
   async function toggleCamera() {
-
-    resetInactivityTimer();
-
-
-    if (!productMaster) {
-
-      document
-        .getElementById("message")
-        .innerText =
-        "先に商品情報を読み込んでください。";
-
-
-      loadProductMaster(false);
-
-      return;
-
-    }
-
 
     if (cameraRunning) {
 
@@ -1037,13 +613,8 @@
           "reader",
           {
             formatsToSupport: [
-
-              Html5QrcodeSupportedFormats
-                .EAN_13,
-
-              Html5QrcodeSupportedFormats
-                .EAN_8
-
+              Html5QrcodeSupportedFormats.EAN_13,
+              Html5QrcodeSupportedFormats.EAN_8
             ],
 
             verbose: false
@@ -1117,31 +688,32 @@
         {
           fps: 20,
 
-          qrbox: function(
-            viewfinderWidth,
-            viewfinderHeight
-          ) {
+          qrbox:
+            function(
+              viewfinderWidth,
+              viewfinderHeight
+            ) {
 
-            return {
+              return {
 
-              width:
-                Math.floor(
-                  viewfinderWidth *
-                  0.95
-                ),
-
-              height:
-                Math.min(
-                  180,
+                width:
                   Math.floor(
-                    viewfinderHeight *
-                    0.45
+                    viewfinderWidth *
+                    0.95
+                  ),
+
+                height:
+                  Math.min(
+                    180,
+                    Math.floor(
+                      viewfinderHeight *
+                      0.45
+                    )
                   )
-                )
 
-            };
+              };
 
-          },
+            },
 
           aspectRatio:
             1.777778,
@@ -1223,14 +795,6 @@
 
       message.innerText =
         "カメラを開始できませんでした。\n\n" +
-        "エラー種類：" +
-        (
-          error &&
-          error.name
-            ? error.name
-            : "不明"
-        ) +
-        "\n\n詳細：" +
         (
           error &&
           error.message
@@ -1238,171 +802,7 @@
             : String(error)
         );
 
-
-      console.error(error);
-
     }
-
-  }
-
-
-  function cameraExists(cameraId) {
-
-    return cameras.some(
-      function(camera) {
-
-        return (
-          camera.id ===
-          cameraId
-        );
-
-      }
-    );
-
-  }
-
-
-  function createCameraOptions() {
-
-    const select =
-      document.getElementById(
-        "cameraSelect"
-      );
-
-
-    select.innerHTML = "";
-
-
-    cameras.forEach(
-      function(camera, index) {
-
-        const option =
-          document.createElement(
-            "option"
-          );
-
-
-        option.value =
-          camera.id;
-
-
-        option.textContent =
-          "カメラ " +
-          (index + 1) +
-          (
-            camera.label
-              ? "：" +
-                camera.label
-              : ""
-          );
-
-
-        select.appendChild(
-          option
-        );
-
-      }
-    );
-
-
-    const savedCameraId =
-      localStorage.getItem(
-        CAMERA_STORAGE_KEY
-      );
-
-
-    if (
-      savedCameraId &&
-      cameraExists(savedCameraId)
-    ) {
-
-      select.value =
-        savedCameraId;
-
-    }
-
-  }
-
-
-  async function changeCamera() {
-
-    resetInactivityTimer();
-
-
-    const cameraId =
-      document
-        .getElementById(
-          "cameraSelect"
-        )
-        .value;
-
-
-    if (!cameraId) {
-
-      document
-        .getElementById(
-          "message"
-        )
-        .innerText =
-        "変更するカメラを選択してください。";
-
-      return;
-
-    }
-
-
-    localStorage.setItem(
-      CAMERA_STORAGE_KEY,
-      cameraId
-    );
-
-
-    await stopCamera(false);
-
-    await startCamera(cameraId);
-
-  }
-
-
-  async function resetCameraSetting() {
-
-    resetInactivityTimer();
-
-
-    localStorage.removeItem(
-      CAMERA_STORAGE_KEY
-    );
-
-
-    await stopCamera(false);
-
-    await startCamera();
-
-
-    document
-      .getElementById("message")
-      .innerText =
-      "おすすめの背面カメラ設定に戻しました。";
-
-  }
-
-
-  function toggleCameraSettings() {
-
-    resetInactivityTimer();
-
-
-    const settings =
-      document.getElementById(
-        "cameraSettings"
-      );
-
-
-    settings.style.display =
-      settings.style.display ===
-      "block"
-        ? "none"
-        : "block";
 
   }
 
@@ -1411,9 +811,6 @@
     decodedText,
     decodedResult
   ) {
-
-    resetInactivityTimer();
-
 
     if (scanLocked) {
       return;
@@ -1472,7 +869,7 @@
       jan;
 
 
-    searchLocalProduct(jan);
+    searchProductByJan(jan);
 
 
     setTimeout(
@@ -1493,9 +890,6 @@
 
   function searchFromInput() {
 
-    resetInactivityTimer();
-
-
     const jan =
       document
         .getElementById(
@@ -1504,12 +898,12 @@
         .value;
 
 
-    searchLocalProduct(jan);
+    searchProductByJan(jan);
 
   }
 
 
-  function searchLocalProduct(jan) {
+  function searchProductByJan(jan) {
 
     const normalizedJan =
       normalizeJan(jan);
@@ -1526,30 +920,201 @@
     }
 
 
-    if (!productMaster) {
+    const searchToken =
+      ++activeSearchToken;
 
-      showSearchError(
-        "商品情報がありません。最新の商品情報に更新してください。"
+
+    document
+      .getElementById(
+        "result"
+      )
+      .innerHTML = `
+
+        <div class="searchingCard">
+
+          商品情報を検索しています...
+
+          <br><br>
+
+          JAN：
+          ${escapeHtml(normalizedJan)}
+
+        </div>
+
+      `;
+
+
+    const callbackName =
+      "janCallback_" +
+      Date.now() +
+      "_" +
+      Math.random()
+        .toString(36)
+        .slice(2, 8);
+
+
+    const script =
+      document.createElement(
+        "script"
       );
 
 
-      loadProductMaster(false);
+    const timeoutId =
+      setTimeout(
+        function() {
+
+          cleanupJsonp(
+            callbackName,
+            script
+          );
+
+
+          if (
+            searchToken !==
+            activeSearchToken
+          ) {
+
+            return;
+
+          }
+
+
+          showSearchError(
+            "商品検索がタイムアウトしました。通信状態を確認して、もう一度検索してください。"
+          );
+
+        },
+        15000
+      );
+
+
+    window[callbackName] =
+      function(data) {
+
+        clearTimeout(
+          timeoutId
+        );
+
+
+        cleanupJsonp(
+          callbackName,
+          script
+        );
+
+
+        if (
+          searchToken !==
+          activeSearchToken
+        ) {
+
+          return;
+
+        }
+
+
+        showJanSearchResult(
+          data,
+          normalizedJan
+        );
+
+      };
+
+
+    script.onerror =
+      function() {
+
+        clearTimeout(
+          timeoutId
+        );
+
+
+        cleanupJsonp(
+          callbackName,
+          script
+        );
+
+
+        if (
+          searchToken !==
+          activeSearchToken
+        ) {
+
+          return;
+
+        }
+
+
+        showSearchError(
+          "商品検索APIへ接続できませんでした。"
+        );
+
+      };
+
+
+    script.src =
+      GAS_API_URL +
+      "?action=jan" +
+      "&jan=" +
+      encodeURIComponent(
+        normalizedJan
+      ) +
+      "&callback=" +
+      encodeURIComponent(
+        callbackName
+      ) +
+      "&t=" +
+      Date.now();
+
+
+    document
+      .body
+      .appendChild(
+        script
+      );
+
+  }
+
+
+  function showJanSearchResult(
+    data,
+    searchedJan
+  ) {
+
+    if (!data) {
+
+      showSearchError(
+        "商品情報を取得できませんでした。"
+      );
 
       return;
 
     }
 
 
-    const product =
-      productMaster[
-        normalizedJan
-      ];
+    if (
+      data.error ||
+      data.success === false
+    ) {
+
+      showSearchError(
+        data.message ||
+        "商品検索中にエラーが発生しました。"
+      );
+
+      return;
+
+    }
 
 
-    if (!product) {
+    if (
+      !data.found ||
+      !data.product
+    ) {
 
       document
-        .getElementById("result")
+        .getElementById(
+          "result"
+        )
         .innerHTML = `
 
           <div class="errorCard">
@@ -1559,7 +1124,9 @@
             <br><br>
 
             JAN：
-            ${escapeHtml(normalizedJan)}
+            ${escapeHtml(
+              searchedJan
+            )}
 
           </div>
 
@@ -1567,7 +1134,9 @@
 
 
       document
-        .getElementById("message")
+        .getElementById(
+          "message"
+        )
         .innerText =
         "該当する商品が見つかりませんでした。";
 
@@ -1577,7 +1146,9 @@
     }
 
 
-    showProduct(product);
+    showProduct(
+      data.product
+    );
 
   }
 
@@ -1593,7 +1164,9 @@
 
 
     document
-      .getElementById("result")
+      .getElementById(
+        "result"
+      )
       .innerHTML = `
 
         <div class="productCard">
@@ -1676,15 +1249,6 @@
 
           </div>
 
-          <div class="lotCard">
-
-            ロット：
-            ${escapeHtml(
-              data.lot || "-"
-            )}
-
-          </div>
-
           <button
             class="nextButton"
             onclick="prepareNextProduct()"
@@ -1698,7 +1262,9 @@
 
 
     document
-      .getElementById("message")
+      .getElementById(
+        "message"
+      )
       .innerText =
       "商品が見つかりました。";
 
@@ -1707,7 +1273,7 @@
 
   function prepareNextProduct() {
 
-    resetInactivityTimer();
+    activeSearchToken++;
 
 
     lastScannedJan =
@@ -1719,19 +1285,25 @@
 
 
     document
-      .getElementById("result")
+      .getElementById(
+        "result"
+      )
       .innerHTML =
       "";
 
 
     document
-      .getElementById("janInput")
+      .getElementById(
+        "janInput"
+      )
       .value =
       "";
 
 
     document
-      .getElementById("message")
+      .getElementById(
+        "message"
+      )
       .innerText =
       cameraRunning
         ? "次の商品のJANバーコードを枠内に合わせてください。"
@@ -1740,72 +1312,14 @@
   }
 
 
-  function normalizeJan(value) {
-
-    return String(
-      value || ""
-    )
-      .replace(/\D/g, "")
-      .trim();
-
-  }
-
-
-  function formatPrice(value) {
-
-    if (
-      value === "" ||
-      value === null ||
-      value === undefined
-    ) {
-
-      return "-";
-
-    }
-
-
-    const cleanedValue =
-      String(value)
-
-        .replace(/,/g, "")
-
-        .replace(/¥/g, "")
-
-        .replace(/円/g, "")
-
-        .trim();
-
-
-    const numberValue =
-      Number(cleanedValue);
-
-
-    if (
-      Number.isNaN(
-        numberValue
-      )
-    ) {
-
-      return escapeHtml(
-        String(value)
-      );
-
-    }
-
-
-    return "¥" +
-      numberValue
-        .toLocaleString(
-          "ja-JP"
-        );
-
-  }
-
-
-  function showSearchError(message) {
+  function showSearchError(
+    message
+  ) {
 
     document
-      .getElementById("result")
+      .getElementById(
+        "result"
+      )
       .innerHTML = `
 
         <div class="errorCard">
@@ -1818,9 +1332,208 @@
 
 
     document
-      .getElementById("message")
+      .getElementById(
+        "message"
+      )
       .innerText =
       "商品を検索できませんでした。";
+
+  }
+
+
+  function cleanupJsonp(
+    callbackName,
+    script
+  ) {
+
+    try {
+
+      delete window[
+        callbackName
+      ];
+
+    } catch (error) {
+
+      window[
+        callbackName
+      ] =
+        undefined;
+
+    }
+
+
+    if (
+      script &&
+      script.parentNode
+    ) {
+
+      script.parentNode
+        .removeChild(
+          script
+        );
+
+    }
+
+  }
+
+
+  function cameraExists(
+    cameraId
+  ) {
+
+    return cameras.some(
+      function(camera) {
+
+        return (
+          camera.id ===
+          cameraId
+        );
+
+      }
+    );
+
+  }
+
+
+  function createCameraOptions() {
+
+    const select =
+      document.getElementById(
+        "cameraSelect"
+      );
+
+
+    select.innerHTML =
+      "";
+
+
+    cameras.forEach(
+      function(camera, index) {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+
+        option.value =
+          camera.id;
+
+
+        option.textContent =
+          "カメラ " +
+          (index + 1) +
+          (
+            camera.label
+              ? "：" +
+                camera.label
+              : ""
+          );
+
+
+        select.appendChild(
+          option
+        );
+
+      }
+    );
+
+
+    const savedCameraId =
+      localStorage.getItem(
+        CAMERA_STORAGE_KEY
+      );
+
+
+    if (
+      savedCameraId &&
+      cameraExists(
+        savedCameraId
+      )
+    ) {
+
+      select.value =
+        savedCameraId;
+
+    }
+
+  }
+
+
+  async function changeCamera() {
+
+    const cameraId =
+      document
+        .getElementById(
+          "cameraSelect"
+        )
+        .value;
+
+
+    if (!cameraId) {
+
+      document
+        .getElementById(
+          "message"
+        )
+        .innerText =
+        "変更するカメラを選択してください。";
+
+      return;
+
+    }
+
+
+    localStorage.setItem(
+      CAMERA_STORAGE_KEY,
+      cameraId
+    );
+
+
+    await stopCamera(false);
+
+    await startCamera(
+      cameraId
+    );
+
+  }
+
+
+  async function resetCameraSetting() {
+
+    localStorage.removeItem(
+      CAMERA_STORAGE_KEY
+    );
+
+
+    await stopCamera(false);
+
+    await startCamera();
+
+
+    document
+      .getElementById(
+        "message"
+      )
+      .innerText =
+      "おすすめの背面カメラ設定に戻しました。";
+
+  }
+
+
+  function toggleCameraSettings() {
+
+    const settings =
+      document.getElementById(
+        "cameraSettings"
+      );
+
+
+    settings.style.display =
+      settings.style.display ===
+      "block"
+        ? "none"
+        : "block";
 
   }
 
@@ -1858,7 +1571,9 @@
 
 
     document
-      .getElementById("reader")
+      .getElementById(
+        "reader"
+      )
       .style.display =
       "none";
 
@@ -1870,21 +1585,19 @@
 
 
     button.disabled =
-      productMaster
-        ? false
-        : true;
+      false;
 
 
     button.innerText =
-      productMaster
-        ? "カメラを起動"
-        : "商品情報を準備しています...";
+      "カメラを起動";
 
 
     if (showMessage) {
 
       document
-        .getElementById("message")
+        .getElementById(
+          "message"
+        )
         .innerText =
         "カメラを停止しました。";
 
@@ -1893,134 +1606,85 @@
   }
 
 
-  function clearProductMaster(
-    reason
-  ) {
+  function normalizeJan(value) {
 
-    productMaster =
-      null;
-
-
-    productCount =
-      0;
-
-
-    masterUpdatedAt =
-      "";
-
-
-    lastScannedJan =
-      "";
-
-
-    scanLocked =
-      false;
-
-
-    document
-      .getElementById("result")
-      .innerHTML =
-      "";
-
-
-    document
-      .getElementById("janInput")
-      .value =
-      "";
-
-
-    document
-      .getElementById("searchButton")
-      .disabled =
-      true;
-
-
-    document
-      .getElementById("cameraButton")
-      .disabled =
-      true;
-
-
-    document
-      .getElementById("cameraButton")
-      .innerText =
-      "商品情報を再読込してください";
-
-
-    setMasterStatus(
-      "error",
-      "削除済み",
-      reason ||
-      "商品情報をメモリから削除しました。"
-    );
-
-
-    document
-      .getElementById("message")
-      .innerText =
-      "商品情報を再度読み込んでください。";
+    return String(
+      value || ""
+    )
+      .replace(/\D/g, "")
+      .trim();
 
   }
 
 
-  function registerActivityEvents() {
+  function formatPrice(value) {
 
-    const events = [
-      "touchstart",
-      "click",
-      "keydown",
-      "scroll"
-    ];
+    if (
+      value === "" ||
+      value === null ||
+      value === undefined
+    ) {
 
+      return "-";
 
-    events.forEach(
-      function(eventName) {
-
-        document.addEventListener(
-          eventName,
-          resetInactivityTimer,
-          {
-            passive: true
-          }
-        );
-
-      }
-    );
-
-  }
+    }
 
 
-  function resetInactivityTimer() {
+    const numberValue =
+      Number(
+        String(value)
 
-    if (inactivityTimer) {
+          .replace(/,/g, "")
 
-      clearTimeout(
-        inactivityTimer
+          .replace(/¥/g, "")
+
+          .replace(/円/g, "")
+
+          .trim()
+      );
+
+
+    if (
+      Number.isNaN(
+        numberValue
+      )
+    ) {
+
+      return escapeHtml(
+        String(value)
       );
 
     }
 
 
-    inactivityTimer =
-      setTimeout(
-        async function() {
-
-          if (cameraRunning) {
-
-            await stopCamera(false);
-
-          }
-
-
-          clearProductMaster(
-            "無操作時間が15分を超えたため、商品情報を端末のメモリから削除しました。"
-          );
-
-        },
-        INACTIVITY_LIMIT
-      );
+    return "¥" +
+      numberValue
+        .toLocaleString(
+          "ja-JP"
+        );
 
   }
+
+
+  document
+    .getElementById(
+      "janInput"
+    )
+    .addEventListener(
+      "keydown",
+      function(event) {
+
+        if (
+          event.key ===
+          "Enter"
+        ) {
+
+          searchFromInput();
+
+        }
+
+      }
+    );
 
 
   document.addEventListener(
@@ -2038,43 +1702,6 @@
 
     }
   );
-
-
-  window.addEventListener(
-    "pagehide",
-    function() {
-
-      productMaster =
-        null;
-
-
-      productCount =
-        0;
-
-
-      masterUpdatedAt =
-        "";
-
-    }
-  );
-
-
-  document
-    .getElementById("janInput")
-    .addEventListener(
-      "keydown",
-      function(event) {
-
-        if (
-          event.key === "Enter"
-        ) {
-
-          searchFromInput();
-
-        }
-
-      }
-    );
 
 
   function escapeHtml(text) {
