@@ -2,11 +2,19 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+>
   <meta name="theme-color" content="#0f172a">
   <title>かんたん見積</title>
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <style>
+    html,
+body {
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+}
     *{box-sizing:border-box}body{margin:0;padding:16px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0f172a;color:#fff}
     .container{max-width:620px;margin:auto;padding-bottom:180px}.top{display:flex;justify-content:space-between;gap:8px;margin-bottom:14px}.link,.clear{padding:10px 12px;border-radius:10px;font-size:13px;font-weight:700}.link{border:1px solid #475569;color:#cbd5e1;text-decoration:none}.clear{border:1px solid #ef4444;background:transparent;color:#fca5a5}
     h1{margin:0 0 5px;font-size:29px}.subtitle{color:#94a3b8;margin-bottom:16px;line-height:1.6}.panel{margin-top:14px;padding:15px;border:1px solid #334155;border-radius:16px;background:#111827}.title{font-size:16px;font-weight:800;margin-bottom:11px}
@@ -22,6 +30,12 @@
   border-color: #a78bfa;
   background: #4c1d95;
   color: #ede9fe;
+}
+    button,
+a,
+input,
+select {
+  touch-action: manipulation;
 }
   </style>
 </head>
