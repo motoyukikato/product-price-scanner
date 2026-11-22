@@ -746,6 +746,87 @@
         margin-top: 8px;
       }
     }
+    .manualProductButton {
+  width: 100%;
+  margin-top: 12px;
+  padding: 14px;
+
+  border: 1px dashed #f59e0b;
+  border-radius: 11px;
+
+  background: #422006;
+  color: #fde68a;
+
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.manualProductForm {
+  display: none;
+
+  margin-top: 12px;
+  padding: 15px;
+
+  border: 1px solid #f59e0b;
+  border-radius: 14px;
+
+  background: #1c1917;
+}
+
+.manualFormTitle {
+  margin-bottom: 13px;
+
+  color: #fde68a;
+
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.manualProductForm label {
+  display: block;
+
+  margin-top: 11px;
+  margin-bottom: 5px;
+
+  color: #cbd5e1;
+
+  font-size: 13px;
+}
+
+.manualInput {
+  width: 100%;
+  padding: 13px;
+
+  border: 1px solid #475569;
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #0f172a;
+  color: white;
+
+  font-size: 16px;
+}
+
+.manualInput:focus {
+  border-color: #f59e0b;
+}
+
+.manualAddButton {
+  width: 100%;
+
+  margin-top: 15px;
+  padding: 14px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #f59e0b;
+  color: #422006;
+
+  font-size: 15px;
+  font-weight: bold;
+}
   </style>
 </head>
 
@@ -917,7 +998,78 @@
       </button>
 
     </div>
+<button
+  class="manualProductButton"
+  onclick="toggleManualProductForm()"
+>
+  ＋ 商品マスターにない商品を追加
+</button>
 
+<div
+  id="manualProductForm"
+  class="manualProductForm"
+>
+
+  <div class="manualFormTitle">
+    商品を自由入力
+  </div>
+
+  <label>
+    商品名
+  </label>
+
+  <input
+    id="manualProductName"
+    class="manualInput"
+    type="text"
+    placeholder="例：特注ガラスベース"
+  >
+
+  <label>
+    品番・メモ
+  </label>
+
+  <input
+    id="manualProductCode"
+    class="manualInput"
+    type="text"
+    placeholder="例：別注品"
+  >
+
+  <label>
+    単価（税抜）
+  </label>
+
+  <input
+    id="manualProductPrice"
+    class="manualInput"
+    type="number"
+    inputmode="numeric"
+    min="0"
+    placeholder="1500"
+  >
+
+  <label>
+    ロット
+  </label>
+
+  <input
+    id="manualProductLot"
+    class="manualInput"
+    type="number"
+    inputmode="numeric"
+    min="1"
+    value="1"
+  >
+
+  <button
+    class="manualAddButton"
+    onclick="addManualProduct()"
+  >
+    見積に追加
+  </button>
+
+</div>
     <div id="searchResults"></div>
 
   </div>
@@ -3433,6 +3585,197 @@
       .replace(/\n/g, "");
 
   }
+ function toggleManualProductForm() {
+
+  resetInactivityTimer();
+
+  const form =
+    document.getElementById(
+      "manualProductForm"
+    );
+
+  form.style.display =
+    form.style.display === "block"
+      ? "none"
+      : "block";
+
+}
+
+
+function addManualProduct() {
+
+  resetInactivityTimer();
+
+
+  const name =
+    document
+      .getElementById(
+        "manualProductName"
+      )
+      .value
+      .trim();
+
+
+  const productCode =
+    document
+      .getElementById(
+        "manualProductCode"
+      )
+      .value
+      .trim();
+
+
+  const price =
+    parsePrice(
+      document
+        .getElementById(
+          "manualProductPrice"
+        )
+        .value
+    );
+
+
+  const lot =
+    Math.max(
+      1,
+      parseInteger(
+        document
+          .getElementById(
+            "manualProductLot"
+          )
+          .value
+      )
+    );
+
+
+  if (!name) {
+
+    alert(
+      "商品名を入力してください。"
+    );
+
+    return;
+
+  }
+
+
+  if (price <= 0) {
+
+    alert(
+      "単価を入力してください。"
+    );
+
+    return;
+
+  }
+
+
+  const manualId =
+    "manual_" +
+    Date.now() +
+    "_" +
+    Math.random()
+      .toString(36)
+      .slice(2, 8);
+
+
+  const product = {
+
+    jan:
+      manualId,
+
+    productCode:
+      productCode ||
+      "自由入力",
+
+    name:
+      name,
+
+    maker:
+      "自由入力商品",
+
+    lot:
+      String(lot),
+
+    normalPrice:
+      String(price),
+
+    premiumPrice:
+      String(price),
+
+    retailPrice:
+      String(price),
+
+    manual:
+      true
+
+  };
+
+
+  estimateItems.set(
+    manualId,
+    {
+
+      product:
+        product,
+
+      quantity:
+        lot
+
+    }
+  );
+
+
+  renderEstimate();
+
+
+  clearManualProductForm();
+
+
+  document
+    .getElementById(
+      "manualProductForm"
+    )
+    .style.display =
+    "none";
+
+}
+
+
+function clearManualProductForm() {
+
+  document
+    .getElementById(
+      "manualProductName"
+    )
+    .value =
+    "";
+
+
+  document
+    .getElementById(
+      "manualProductCode"
+    )
+    .value =
+    "";
+
+
+  document
+    .getElementById(
+      "manualProductPrice"
+    )
+    .value =
+    "";
+
+
+  document
+    .getElementById(
+      "manualProductLot"
+    )
+    .value =
+    "1";
+
+} 
 </script>
 
 </body>
