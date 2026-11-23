@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+>
+
+<meta
+  name="theme-color"
+  content="#0f172a"
+>
+
+<title>使い方・仕様</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+button,
+a {
+  touch-action: manipulation;
+}
+
+body {
+  margin: 0;
+  padding: 18px;
+
+  background: #0f172a;
+  color: white;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  -webkit-text-size-adjust: 100%;
+}
+
+.container {
+  width: 100%;
+  max-width: 650px;
+  margin: auto;
+  padding-bottom: 40px;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+
+.subtitle {
+  margin-bottom: 20px;
+
+  color: #94a3b8;
+
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.navGrid {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 10px;
+
+  margin-bottom: 20px;
+}
+
+.navButton {
+  display: block;
+
+  padding: 14px;
+
+  border: 1px solid #475569;
+  border-radius: 12px;
+
+  background: #1e293b;
+  color: white;
+
+  text-align: center;
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.card {
+  margin-top: 14px;
+  padding: 17px;
+
+  border: 1px solid #334155;
+  border-radius: 16px;
+
+  background: #111827;
+}
+
+.card h2 {
+  margin: 0 0 13px;
+
+  font-size: 19px;
+}
+
+.card h3 {
+  margin-top: 18px;
+  margin-bottom: 8px;
+
+  color: #cbd5e1;
+
+  font-size: 15px;
+}
+
+.card p,
+.card li {
+  color: #cbd5e1;
+
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.card ul,
+.card ol {
+  padding-left: 22px;
+}
+
+.step {
+  margin-top: 10px;
+  padding: 13px;
+
+  border-radius: 11px;
+
+  background: #1e293b;
+}
+
+.stepNumber {
+  color: #10b981;
+
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.stepTitle {
+  margin-top: 3px;
+
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.blue {
+  border-left: 4px solid #3b82f6;
+}
+
+.green {
+  border-left: 4px solid #10b981;
+}
+
+.yellow {
+  border-left: 4px solid #f59e0b;
+}
+
+.purple {
+  border-left: 4px solid #a78bfa;
+}
+
+.warning {
+  margin-top: 12px;
+  padding: 13px;
+
+  border: 1px solid #f59e0b;
+  border-radius: 11px;
+
+  background: #422006;
+  color: #fde68a;
+
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.priceGrid {
+  display: grid;
+
+  grid-template-columns:
+    1fr;
+
+  gap: 9px;
+}
+
+.priceType {
+  padding: 13px;
+
+  border-radius: 10px;
+
+  background: #1e293b;
+}
+
+.priceName {
+  font-weight: bold;
+}
+
+.priceDesc {
+  margin-top: 4px;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.specTable {
+  width: 100%;
+
+  margin-top: 10px;
+
+  border-collapse: collapse;
+
+  font-size: 13px;
+}
+
+.specTable th,
+.specTable td {
+  padding: 10px 8px;
+
+  border-bottom:
+    1px solid #334155;
+
+  text-align: left;
+  vertical-align: top;
+}
+
+.specTable th {
+  width: 34%;
+
+  color: #94a3b8;
+}
+
+.footer {
+  margin-top: 25px;
+
+  color: #64748b;
+
+  font-size: 11px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>
+  商品価格検索・見積システム
+</h1>
+
+<div class="subtitle">
+  商品価格の確認から見積作成まで、
+  スマートフォンで簡単に操作できます。
+</div>
+
+
+<div class="navGrid">
+
+<a
+  href="./index.html"
+  class="navButton"
+>
+  商品価格検索へ
+</a>
+
+<a
+  href="./estimate.html"
+  class="navButton"
+>
+  見積作成へ
+</a>
+
+</div>
+
+
+<div class="card blue">
+
+<h2>
+  1. 商品価格を確認する
+</h2>
+
+<div class="step">
+
+<div class="stepNumber">
+STEP 1
+</div>
+
+<div class="stepTitle">
+商品価格検索を開く
+</div>
+
+</div>
+
+<div class="step">
+
+<div class="stepNumber">
+STEP 2
+</div>
+
+<div class="stepTitle">
+「カメラを起動」を押す
+</div>
+
+</div>
+
+<div class="step">
+
+<div class="stepNumber">
+STEP 3
+</div>
+
+<div class="stepTitle">
+商品のJANバーコードを読み取る
+</div>
+
+</div>
+
+<p>
+JANを読み取ると、該当商品の価格情報が表示されます。
+</p>
+
+<ul>
+
+<li>
+メーカー名
+</li>
+
+<li>
+商品名
+</li>
+
+<li>
+品番
+</li>
+
+<li>
+JANコード
+</li>
+
+<li>
+上代
+</li>
+
+<li>
+通常下代
+</li>
+
+<li>
+プレミアム会員価格
+</li>
+
+</ul>
+
+</div>
+
+
+<div class="card green">
+
+<h2>
+  2. JANバーコードを読み取るコツ
+</h2>
+
+<ul>
+
+<li>
+バーコード全体を読み取り枠に入れてください。
+</li>
+
+<li>
+商品から15～25cm程度離してください。
+</li>
+
+<li>
+読み取り時は1～2秒ほどスマートフォンを止めてください。
+</li>
+
+<li>
+光が反射する場合は、商品を少し傾けてください。
+</li>
+
+</ul>
+
+<div class="warning">
+ピントが合わない場合は
+「読み取れない場合・カメラを変更」
+から
