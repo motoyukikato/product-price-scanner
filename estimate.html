@@ -883,7 +883,59 @@ function clearEstimate(){if(!estimateItems.size||confirm("見積商品をすべ�
 function renderEstimate(){empty.style.display=estimateItems.size?"none":"block";items.innerHTML=[...estimateItems].map(([key,x])=>{const p=x.product,unit=getPrice(p),sub=unit*x.quantity,k=safeJs(key);return `<div class="item"><div class="item-top"><div><div class="maker">${escapeHtml(p.maker||"")}</div><div class="name">${escapeHtml(p.name||"")}</div><div class="meta">品番：${escapeHtml(p.productCode||"-")}<br>${p.manual?"自由入力商品":"JAN："+escapeHtml(p.jan||"-")}</div></div><button class="remove" onclick="removeItem('${k}')">削除</button></div><div class="price-line"><span>${priceLabel()}</span><strong class="unit">${formatPrice(unit)}</strong></div><div class="qty"><button onclick="changeQty('${k}',-1)">−</button><input type="number" min="1" value="${x.quantity}" onchange="setQty('${k}',this.value)"><button onclick="changeQty('${k}',1)">＋</button></div><div class="subtotal"><span>小計</span><strong>${formatPrice(sub)}</strong></div></div>`}).join("");itemCount.textContent=estimateItems.size+"商品";let qty=0,subtotal=0;estimateItems.forEach(x=>{qty+=x.quantity;subtotal+=getPrice(x.product)*x.quantity});const tax=Math.floor(subtotal*TAX_RATE);countSummary.textContent=`${estimateItems.size}点 / ${qty.toLocaleString("ja-JP")}個`;subtotalSummary.textContent=formatPrice(subtotal);taxSummary.textContent=formatPrice(tax);totalSummary.textContent=formatPrice(subtotal+tax)}
 
 async function toggleCamera(){cameraRunning?await stopCamera():await startCamera()}
-async function startCamera(id=""){cameraBtn.disabled=true;cameraBtn.textContent="カメラを準備しています...";reader.style.display="block";try{scanner=new Html5Qrcode("reader",{formatsToSupport:[Html5QrcodeSupportedFormats.EAN_13,Html5QrcodeSupportedFormats.EAN_8],verbose:false});cameras=await Html5Qrcode.getCameras();fillCameras();const saved=localStorage.getItem(CAMERA_KEY),source=id||((saved&&cameras.some(c=>c.id===saved))?saved:{facingMode:"environment"});await scanner.start(source,{fps:20,qrbox:(w,h)=>({width:Math.floor(w*.95),height:Math.min(180,Math.floor(h*.45))}),aspectRatio:1.777778,disableFlip:true},onScan,()=>{});cameraRunning=true;cameraBtn.disabled=false;cameraBtn.textContent="カメラを停止";if(typeof source==="string"){localStorage.setItem(CAMERA_KEY,source);cameraSelect.value=source}cameraMessage.textContent="JANバーコード全体を枠内に合わせてください。"}catch(e){scanner=null;cameraRunning=false;cameraBtn.disabled=false;cameraBtn.textContent="バーコードで商品を追加";reader.style.display="none";cameraMessage.textContent="カメラを開始できませんでした。\n"+(e.message||e)}}
+async function startCamera(id=""){cameraBtn.disabled=true;cameraBtn.textContent="カメラを準備しています...";reader.style.display="block";try{scanner=new Html5Qrcode("reader",{formatsToSupport: [
+
+  Html5QrcodeSupportedFormats.EAN_13,
+
+  Html5QrcodeSupportedFormats.EAN_8,
+
+  Html5QrcodeSupportedFormats.CODE_128
+
+],verbose:false});cameras=await Html5Qrcode.getCameras();fillCameras();const saved=localStorage.getItem(CAMERA_KEY),source=id||((saved&&cameras.some(c=>c.id===saved))?saved:{facingMode:"environment"});await scanner.start(
+
+  source,
+
+  {
+    // 20では端末負荷が高いため10へ下げる
+    fps: 10,
+
+    // JANバーコード向けの横長読取枠
+    qrbox: function(
+      viewfinderWidth,
+      viewfinderHeight
+    ) {
+
+      const width =
+        Math.floor(
+          viewfinderWidth * 0.88
+        );
+
+      const height =
+        Math.min(
+          120,
+          Math.floor(
+            viewfinderHeight * 0.28
+          )
+        );
+
+      return {
+        width: width,
+        height: height
+      };
+
+    },
+
+    // 画面比率をライブラリに任せるため削除
+    disableFlip: true
+  },
+
+  onScan,
+
+  function() {
+    // 読み取れないフレームは無視
+  }
+
+);cameraRunning=true;cameraBtn.disabled=false;cameraBtn.textContent="カメラを停止";if(typeof source==="string"){localStorage.setItem(CAMERA_KEY,source);cameraSelect.value=source}cameraMessage.textContent="JANバーコード全体を枠内に合わせてください。"}catch(e){scanner=null;cameraRunning=false;cameraBtn.disabled=false;cameraBtn.textContent="バーコードで商品を追加";reader.style.display="none";cameraMessage.textContent="カメラを開始できませんでした。\n"+(e.message||e)}}
 function onScan(text){if(scanLocked)return;const jan=normalizeJan(text);if(!jan||jan===lastJan)return;scanLocked=true;lastJan=jan;navigator.vibrate?.(100);jsonp({action:"jan",jan},data=>{if(data?.found&&data.product){addProduct(data.product);cameraMessage.textContent="見積に追加しました："+data.product.name}else{showMessage("商品マスターに登録されていません。JAN："+jan,true)}},()=>showMessage("商品検索APIへ接続できませんでした。",true));setTimeout(()=>{scanLocked=false;lastJan=""},1000)}
 function fillCameras(){cameraSelect.innerHTML=cameras.map((c,i)=>`<option value="${escapeHtml(c.id)}">カメラ ${i+1}${c.label?"："+escapeHtml(c.label):""}</option>`).join("");const saved=localStorage.getItem(CAMERA_KEY);if(saved)cameraSelect.value=saved}
 async function changeCamera(){const id=cameraSelect.value;if(!id)return;localStorage.setItem(CAMERA_KEY,id);await stopCamera(false);await startCamera(id)}
