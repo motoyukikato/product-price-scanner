@@ -9,155 +9,27 @@
 <style>
 *{box-sizing:border-box}html,body,button,a,input,select,textarea{touch-action:manipulation}body{margin:0;padding:16px;background:#0f172a;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;-webkit-text-size-adjust:100%}.container{max-width:620px;margin:auto;padding-bottom:190px}.top{display:flex;justify-content:space-between;gap:8px;margin-bottom:14px}.link,.clear{padding:10px 12px;border-radius:10px;font-size:13px;font-weight:700}.link{border:1px solid #475569;color:#cbd5e1;text-decoration:none}.clear{border:1px solid #ef4444;background:transparent;color:#fca5a5}h1{margin:0 0 5px;font-size:29px}.subtitle{color:#94a3b8;margin-bottom:16px;line-height:1.6}.panel{margin-top:14px;padding:15px;border:1px solid #334155;border-radius:16px;background:#111827}.title{font-size:16px;font-weight:800;margin-bottom:11px}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.55}.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.price-btn{padding:14px 8px;border:1px solid #475569;border-radius:11px;background:#1e293b;color:#cbd5e1;font-weight:800}.price-btn.normal{border-color:#38bdf8;background:#0c4a6e;color:#e0f2fe}.price-btn.premium{border-color:#f59e0b;background:#422006;color:#fde68a}.price-btn.retail{border-color:#a78bfa;background:#4c1d95;color:#ede9fe}.row{display:flex;gap:8px}.field{width:100%;min-width:0;padding:14px;border:1px solid #475569;border-radius:10px;background:#1e293b;color:#fff;font-size:16px;outline:none}.search-btn,.green-btn{padding:14px 18px;border:0;border-radius:10px;background:#10b981;color:#052e25;font-weight:800}.help{color:#64748b;font-size:12px;line-height:1.6;margin-top:8px}.camera-btn{width:100%;margin-top:11px;padding:15px;border:0;border-radius:12px;background:#2563eb;color:#fff;font-weight:800}.settings-btn{width:100%;margin-top:9px;padding:11px;border:1px solid #475569;border-radius:10px;background:#1e293b;color:#cbd5e1;font-weight:700}#reader{display:none;margin-top:12px;border:2px solid #10b981;border-radius:15px;overflow:hidden;background:#000}#reader video{width:100%!important}#cameraSettings,#manualForm{display:none;margin-top:10px;padding:13px;border:1px solid #475569;border-radius:12px;background:#0f172a}#cameraMessage{color:#94a3b8;font-size:13px;line-height:1.6;margin-top:9px;white-space:pre-wrap}.manual-toggle{width:100%;margin-top:13px;padding:14px;border:1px dashed #f59e0b;border-radius:11px;background:#422006;color:#fde68a;font-weight:800}.label{display:block;margin:10px 0 5px;color:#cbd5e1;font-size:13px}.manual-add,.print-btn{width:100%;margin-top:13px;padding:14px;border:0;border-radius:10px;background:#f59e0b;color:#422006;font-weight:800}.notice,.error{margin-top:10px;padding:13px;border-radius:11px;font-size:13px;line-height:1.6}.notice{background:#1e293b;color:#cbd5e1}.error{border:1px solid #ef4444;background:#450a0a;color:#fecaca}.candidate,.item{margin-top:9px;padding:14px;border:1px solid #334155;border-radius:13px;background:#1e293b}.maker,.meta{color:#94a3b8;font-size:12px;line-height:1.6}.name{margin-top:3px;font-size:17px;font-weight:800;line-height:1.4}.candidate-price{margin-top:8px;color:#a7f3d0;font-weight:800}.add-btn{width:100%;margin-top:10px;padding:11px;border:0;border-radius:9px;background:#10b981;color:#052e25;font-weight:800}.item-top{display:flex;justify-content:space-between;gap:12px}.remove{height:34px;padding:0 10px;border:1px solid #ef4444;border-radius:8px;background:transparent;color:#fca5a5;font-weight:700}.price-line,.subtotal{display:flex;justify-content:space-between;align-items:center;margin-top:11px;padding-top:10px;border-top:1px solid #334155}.unit,.subtotal strong{font-size:20px;font-weight:800}.qty{display:grid;grid-template-columns:44px 1fr 44px;gap:8px;margin-top:12px}.qty button{border:1px solid #475569;border-radius:9px;background:#0f172a;color:#fff;font-size:22px}.qty input{width:100%;padding:10px;border:1px solid #475569;border-radius:9px;background:#0f172a;color:#fff;text-align:center;font-size:17px;font-weight:800}.empty{padding:16px;text-align:center;color:#64748b;font-size:13px}.summary{position:fixed;left:0;right:0;bottom:0;margin:auto;max-width:620px;padding:14px 18px;background:rgba(6,78,59,.98);border:1px solid #10b981;border-radius:16px 16px 0 0;box-shadow:0 -8px 25px #0006;z-index:10}.sumrow{display:flex;justify-content:space-between;margin-top:5px;color:#d1fae5;font-size:13px}.total{font-size:27px;color:#fff}.pdfMessage{margin-top:10px;color:#cbd5e1;font-size:13px;line-height:1.6}
 #pdfDocument{position:fixed;left:-10000px;top:0;width:794px;min-height:1123px;padding:55px;background:#fff;color:#111827;font-family:"Noto Sans JP","Segoe UI",sans-serif}.pdfHeader{display:flex;justify-content:space-between;gap:30px;padding-bottom:20px;border-bottom:3px solid #1e293b}.pdfTitle{font-size:30px;font-weight:700;letter-spacing:8px}.pdfCustomer{min-width:330px;margin-top:25px;padding-bottom:6px;border-bottom:1px solid #64748b;font-size:18px;font-weight:700}.pdfRight{font-size:12px;line-height:1.9;text-align:right}.pdfTotalBox{display:flex;justify-content:space-between;align-items:center;margin:25px 0 20px;padding:15px 18px;border:2px solid #1e293b}.pdfGrand{font-size:28px;font-weight:700}.pdfTable{width:100%;border-collapse:collapse;font-size:11px}.pdfTable th{padding:9px 7px;border:1px solid #64748b;background:#e2e8f0}.pdfTable td{padding:9px 7px;border:1px solid #94a3b8}.center{text-align:center}.right{text-align:right}.pdfSummary{width:290px;margin:18px 0 0 auto}.pdfSummaryRow{display:flex;justify-content:space-between;padding:7px 4px;border-bottom:1px solid #cbd5e1;font-size:12px}.pdfSummaryTotal{border-bottom:3px double #1e293b;font-size:16px}.pdfInfo{margin-top:28px;padding:14px;border:1px solid #94a3b8;font-size:11px;line-height:1.7}.pdfNote{min-height:35px;white-space:pre-wrap}.pdfFooter{margin-top:25px;color:#64748b;font-size:9px;text-align:center}
+.guideLink{display:block;width:100%;margin-bottom:16px;padding:13px;border:1px solid #475569;border-radius:12px;background:#1e293b;color:#cbd5e1;text-align:center;text-decoration:none;font-size:14px;font-weight:700}.guideLink:active{background:#334155}.zoomBox{display:none;margin-top:10px;padding:12px;border:1px solid #334155;border-radius:12px;background:#111827}.zoomNote{margin-bottom:8px;color:#cbd5e1;font-size:13px;text-align:center;line-height:1.5}.zoomGrid{display:grid;grid-template-columns:1fr 90px 1fr;gap:8px}.zoomValue{display:flex;align-items:center;justify-content:center;font-weight:700}
 @media(max-width:420px){.row{display:block}.search-btn{width:100%;margin-top:8px}.price-grid{grid-template-columns:1fr}}
-@media print {
-
-  @page {
-    size: A4 portrait;
-    margin: 8mm;
-  }
-
-  html,
-  body {
-    width: 100% !important;
-    height: auto !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    background: #ffffff !important;
-    color: #111827 !important;
-
-    overflow: visible !important;
-  }
-
-  /*
-   * 親のcontainerは消さない
-   */
-  .container {
-    display: block !important;
-
-    width: 100% !important;
-    max-width: none !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    background: #ffffff !important;
-  }
-
-  /*
-   * container内では見積書以外を消す
-   */
-  .container > *:not(#pdfDocument) {
-    display: none !important;
-  }
-
-  /*
-   * 画面下部の合計欄を消す
-   */
-  .summary {
-    display: none !important;
-  }
-
-  /*
-   * 見積書本体だけを印刷
-   */
-  #pdfDocument {
-    display: block !important;
-
-    position: static !important;
-
-    left: auto !important;
-    top: auto !important;
-
-    width: 100% !important;
-
-    min-height: 0 !important;
-    height: auto !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    background: #ffffff !important;
-    color: #111827 !important;
-
-    visibility: visible !important;
-    opacity: 1 !important;
-
-    overflow: visible !important;
-
-    z-index: auto !important;
-  }
-
-  #pdfDocument * {
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-
-  .pdfTable {
-    width: 100% !important;
-    border-collapse: collapse !important;
-  }
-
-  /*
-   * 商品1行をページ途中で分割しない
-   */
-  .pdfTable tr {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-
-  /*
-   * 合計欄・備考欄を途中で分割しない
-   */
-  .pdfSummary,
-  .pdfInfo {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-
-}
-  .guideLink {
-  display: block;
-
-  width: 100%;
-  margin-bottom: 16px;
-  padding: 13px;
-
-  border: 1px solid #475569;
-  border-radius: 12px;
-
-  background: #1e293b;
-  color: #cbd5e1;
-
-  text-align: center;
-  text-decoration: none;
-
-  font-size: 14px;
-  font-weight: bold;
-
-  touch-action: manipulation;
-}
-
-.guideLink:active {
-  transform: scale(0.98);
-  background: #334155;
-}
+@media print{@page{size:A4 portrait;margin:8mm}body{margin:0!important;padding:0!important;background:#fff!important}body>*{visibility:hidden!important}#pdfDocument,#pdfDocument *{visibility:visible!important}#pdfDocument{position:absolute!important;left:0!important;top:0!important;width:194mm!important;min-height:281mm!important;padding:10mm!important;margin:0!important;background:#fff!important;color:#111827!important;z-index:999999!important}.summary{display:none!important}.pdfTable tr{break-inside:avoid;page-break-inside:avoid}}
 </style>
 </head>
 <body>
 <div class="container">
 <div class="top"><a class="link" href="./index.html">商品価格検索へ戻る</a><button class="clear" onclick="clearEstimate()">見積を全削除</button></div>
-  <a
-  href="./guide.html"
-  class="guideLink"
->
-  ？ 使い方・仕様を見る
-</a>
+<a href="./guide.html" class="guideLink">？ 使い方・仕様を見る</a>
 <h1>かんたん見積</h1><div class="subtitle">JAN・品番・品名・メーカーから商品を検索できます</div>
 <div class="panel"><div class="title">見積価格</div><div class="price-grid"><button id="normalBtn" class="price-btn normal" onclick="setPriceType('normal')">通常下代</button><button id="premiumBtn" class="price-btn" onclick="setPriceType('premium')">プレミアム会員価格</button><button id="retailBtn" class="price-btn" onclick="setPriceType('retail')">上代</button></div></div>
-<div class="panel"><div class="title">商品を追加</div><div class="row"><input id="searchInput" class="field" placeholder="JAN・品番・品名・メーカー" autocomplete="off"><button class="search-btn" onclick="searchProducts()">検索</button></div><div class="help">完全一致を優先し、候補を最大30件表示します。</div><button id="cameraBtn" class="camera-btn" onclick="toggleCamera()">バーコードで商品を追加</button><div id="reader"></div><div id="cameraMessage"></div><button class="settings-btn" onclick="toggleCameraSettings()">読み取れない場合・カメラを変更</button><div id="cameraSettings"><select id="cameraSelect" class="field"></select><button class="green-btn" style="width:100%;margin-top:9px" onclick="changeCamera()">選択したカメラに変更</button><button class="settings-btn" onclick="resetCamera()">おすすめ設定に戻す</button></div><button class="manual-toggle" onclick="toggleManualForm()">＋ 商品マスターにない商品を追加</button><div id="manualForm"><div class="title">商品を自由入力</div><label class="label">商品名</label><input id="manualName" class="field"><label class="label">品番・メモ</label><input id="manualCode" class="field"><label class="label">通常下代</label><input id="manualNormalPrice" class="field" type="number" inputmode="numeric"><label class="label">プレミアム会員価格</label><input id="manualPremiumPrice" class="field" type="number" inputmode="numeric"><label class="label">上代</label><input id="manualRetailPrice" class="field" type="number" inputmode="numeric"><button class="manual-add" onclick="addManualProduct()">見積に追加して続ける</button></div><div id="searchResults"></div></div>
+<div class="panel"><div class="title">商品を追加</div><div class="row"><input id="searchInput" class="field" placeholder="JAN・品番・品名・メーカー" autocomplete="off"><button class="search-btn" onclick="searchProducts()">検索</button></div><div class="help">完全一致を優先し、候補を最大30件表示します。</div><button id="cameraBtn" class="camera-btn" onclick="toggleCamera()">バーコードで商品を追加</button><div id="reader"></div>
+<div id="zoomControls" class="zoomBox">
+  <div class="zoomNote">ピントが合わない場合は、商品から25〜35cm離してズームを調整してください。</div>
+  <div class="zoomGrid">
+    <button class="settings-btn" style="margin-top:0" onclick="changeZoom(-1)">－</button>
+    <div id="zoomValue" class="zoomValue">1.0×</div>
+    <button class="settings-btn" style="margin-top:0" onclick="changeZoom(1)">＋</button>
+  </div>
+</div>
+<div id="cameraMessage"></div><button class="settings-btn" onclick="toggleCameraSettings()">読み取れない場合・カメラを変更</button><div id="cameraSettings"><select id="cameraSelect" class="field"></select><button class="green-btn" style="width:100%;margin-top:9px" onclick="changeCamera()">選択したカメラに変更</button><button class="settings-btn" onclick="resetCamera()">おすすめ設定に戻す</button></div><button class="manual-toggle" onclick="toggleManualForm()">＋ 商品マスターにない商品を追加</button><div id="manualForm"><div class="title">商品を自由入力</div><label class="label">商品名</label><input id="manualName" class="field"><label class="label">品番・メモ</label><input id="manualCode" class="field"><label class="label">通常下代</label><input id="manualNormalPrice" class="field" type="number" inputmode="numeric"><label class="label">プレミアム会員価格</label><input id="manualPremiumPrice" class="field" type="number" inputmode="numeric"><label class="label">上代</label><input id="manualRetailPrice" class="field" type="number" inputmode="numeric"><button class="manual-add" onclick="addManualProduct()">見積に追加して続ける</button></div><div id="searchResults"></div></div>
 <div class="panel"><div class="title">見積商品 <span id="itemCount" class="maker">0商品</span></div><div id="empty" class="empty">商品がまだ追加されていません。</div><div id="items"></div></div>
 <div class="panel"><div class="title">見積書を作成</div><label class="label">見積先名</label><input id="pdfCustomerName" class="field" placeholder="例：〇〇フラワー 御中"><label class="label">発行元</label><input id="pdfIssuerName" class="field"><label class="label">見積日</label><input id="pdfEstimateDate" class="field" type="date"><label class="label">見積有効期限</label><input id="pdfValidity" class="field" value="発行日より30日間"><label class="label">備考</label><textarea id="pdfNote" class="field" rows="4"></textarea><button class="print-btn" onclick="createEstimatePdf()">見積書を印刷・PDF保存</button><div id="pdfMessage" class="pdfMessage"></div></div>
 <div id="pdfDocument"><div class="pdfHeader"><div><div class="pdfTitle">御 見 積 書</div><div id="pdfCustomerDisplay" class="pdfCustomer"></div></div><div class="pdfRight"><div id="pdfDateDisplay"></div><div id="pdfIssuerDisplay"></div></div></div><div class="pdfTotalBox"><strong>お見積金額（税込）</strong><div id="pdfGrandTotal" class="pdfGrand">¥0</div></div><table class="pdfTable"><thead><tr><th>No.</th><th>品番</th><th>商品名</th><th>数量</th><th>単価</th><th>金額</th></tr></thead><tbody id="pdfItemRows"></tbody></table><div class="pdfSummary"><div class="pdfSummaryRow"><span>税抜合計</span><strong id="pdfSubtotal">¥0</strong></div><div class="pdfSummaryRow"><span>消費税10%</span><strong id="pdfTax">¥0</strong></div><div class="pdfSummaryRow pdfSummaryTotal"><span>税込合計</span><strong id="pdfTotal">¥0</strong></div></div><div class="pdfInfo"><div>見積有効期限：<span id="pdfValidityDisplay"></span></div><div style="margin-top:10px;font-weight:700">備考</div><div id="pdfNoteDisplay" class="pdfNote"></div></div><div class="pdfFooter">本見積書は商品価格検索・見積システムから作成されました。</div></div>
@@ -166,6 +38,7 @@
 <script>
 const GAS_API_URL="https://script.google.com/macros/s/AKfycbwLlT9NxW6-wJDakrSP8wPhV29UFXcDbWaFEXNAEPv0lkc8cmC15ecQd0go0G1IkYGL/exec",CAMERA_KEY="estimatePreferredCamera",TAX_RATE=.10;
 let estimateItems=new Map(),priceType="normal",scanner=null,cameraRunning=false,cameras=[],scanLocked=false,lastJan="",activeRequest=0;
+let videoTrack=null,zoomMin=1,zoomMax=1,zoomStep=.1,currentZoom=1;
 const el=id=>document.getElementById(id),normalizeJan=v=>String(v||"").replace(/\D/g,"").trim(),parsePrice=v=>{const n=Number(String(v||"").replace(/,/g,"").replace(/[¥円]/g,"").replace(/[^\d.-]/g,""));return Number.isFinite(n)?n:0},formatPrice=v=>"¥"+Math.round(Number(v||0)).toLocaleString("ja-JP"),escapeHtml=v=>String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;"),safeJs=v=>String(v??"").replace(/\\/g,"\\\\").replace(/'/g,"\\'").replace(/[\r\n]/g,"");
 function setPriceType(t){priceType=["normal","premium","retail"].includes(t)?t:"normal";el("normalBtn").className="price-btn"+(priceType==="normal"?" normal":"");el("premiumBtn").className="price-btn"+(priceType==="premium"?" premium":"");el("retailBtn").className="price-btn"+(priceType==="retail"?" retail":"");renderEstimate()}
 function getPrice(p){if(priceType==="retail")return parsePrice(p.retailPrice||p.normalPrice||0);if(priceType==="premium")return parsePrice(p.premiumPrice||p.normalPrice||0);return parsePrice(p.normalPrice||0)}function priceLabel(){return priceType==="retail"?"上代":priceType==="premium"?"プレミアム会員価格":"通常下代"}
@@ -177,181 +50,188 @@ function toggleManualForm(){el("manualForm").style.display=el("manualForm").styl
 function changeQty(k,d){const x=estimateItems.get(k);if(!x)return;x.quantity=Math.max(1,x.quantity+d);renderEstimate()}function setQty(k,v){const x=estimateItems.get(k);if(!x)return;x.quantity=Math.max(1,parseInt(v,10)||1);renderEstimate()}function removeItem(k){estimateItems.delete(k);renderEstimate()}function clearEstimate(){if(!estimateItems.size||confirm("見積商品をすべて削除しますか？")){estimateItems.clear();renderEstimate()}}
 function renderEstimate(){el("empty").style.display=estimateItems.size?"none":"block";el("items").innerHTML=[...estimateItems].map(([k,x])=>{const p=x.product,u=getPrice(p),sub=u*x.quantity,s=safeJs(k);return `<div class="item"><div class="item-top"><div><div class="maker">${escapeHtml(p.maker||"")}</div><div class="name">${escapeHtml(p.name||"")}</div><div class="meta">品番：${escapeHtml(p.productCode||"-")}<br>${p.manual?"自由入力商品":"JAN："+escapeHtml(p.jan||"-")}</div></div><button class="remove" onclick="removeItem('${s}')">削除</button></div><div class="price-line"><span>${priceLabel()}</span><strong class="unit">${formatPrice(u)}</strong></div><div class="qty"><button onclick="changeQty('${s}',-1)">−</button><input type="number" min="1" value="${x.quantity}" onchange="setQty('${s}',this.value)"><button onclick="changeQty('${s}',1)">＋</button></div><div class="subtotal"><span>小計</span><strong>${formatPrice(sub)}</strong></div></div>`}).join("");let qty=0,sub=0;estimateItems.forEach(x=>{qty+=x.quantity;sub+=getPrice(x.product)*x.quantity});const tax=Math.floor(sub*TAX_RATE);el("itemCount").textContent=estimateItems.size+"商品";el("countSummary").textContent=`${estimateItems.size}点 / ${qty}個`;el("subtotalSummary").textContent=formatPrice(sub);el("taxSummary").textContent=formatPrice(tax);el("totalSummary").textContent=formatPrice(sub+tax)}
 async function toggleCamera(){cameraRunning?await stopCamera():await startCamera()}
-async function startCamera(cameraId=""){const b=el("cameraBtn"),reader=el("reader"),msg=el("cameraMessage");b.disabled=true;b.textContent="カメラを準備しています...";reader.style.display="block";try{scanner=new Html5Qrcode("reader",{formatsToSupport:[Html5QrcodeSupportedFormats.EAN_13,Html5QrcodeSupportedFormats.EAN_8,Html5QrcodeSupportedFormats.UPC_A,Html5QrcodeSupportedFormats.UPC_E,Html5QrcodeSupportedFormats.CODE_128],verbose:false});cameras=await Html5Qrcode.getCameras();if(!cameras.length)throw new Error("利用可能なカメラがありません");fillCameras();const saved=localStorage.getItem(CAMERA_KEY),source=cameraId&&cameras.some(c=>c.id===cameraId)?cameraId:saved&&cameras.some(c=>c.id===saved)?saved:{facingMode:"environment"};await scanner.start(source,{fps:10,qrbox:(w,h)=>({width:Math.floor(w*.92),height:Math.max(100,Math.min(150,Math.floor(h*.32)))}),disableFlip:false},onScan,()=>{});cameraRunning=true;b.disabled=false;b.textContent="カメラを停止";if(typeof source==="string"){localStorage.setItem(CAMERA_KEY,source);el("cameraSelect").value=source}msg.textContent="JANバーコード全体を枠内に合わせ、15〜25cm離してください。"}catch(e){scanner=null;cameraRunning=false;b.disabled=false;b.textContent="バーコードで商品を追加";reader.style.display="none";msg.textContent="カメラを開始できませんでした。\n"+(e.message||e)}}
-async function onScan(text) {
+async function startCamera(cameraId=""){
+  const button=el("cameraBtn"),reader=el("reader"),message=el("cameraMessage");
+  button.disabled=true;
+  button.textContent="カメラを準備しています...";
+  reader.style.display="block";
+  message.textContent="カメラを準備しています。";
 
-  if (scanLocked) {
-    return;
-  }
+  try{
+    if(typeof Html5Qrcode==="undefined")throw new Error("バーコード読取機能を読み込めませんでした");
 
-  const jan =
-    normalizeJan(text);
+    scanner=new Html5Qrcode("reader",{
+      formatsToSupport:[
+        Html5QrcodeSupportedFormats.EAN_13,
+        Html5QrcodeSupportedFormats.EAN_8,
+        Html5QrcodeSupportedFormats.UPC_A,
+        Html5QrcodeSupportedFormats.UPC_E,
+        Html5QrcodeSupportedFormats.CODE_128
+      ],
+      verbose:false
+    });
 
-  if (!jan) {
-    return;
-  }
+    cameras=await Html5Qrcode.getCameras();
+    if(!cameras||!cameras.length)throw new Error("利用可能なカメラがありません");
+    fillCameras();
 
+    const saved=localStorage.getItem(CAMERA_KEY);
+    let source;
+    if(cameraId&&cameras.some(c=>c.id===cameraId))source=cameraId;
+    else if(saved&&cameras.some(c=>c.id===saved))source=saved;
+    else source={facingMode:"environment"};
 
-  /*
-   * 最初の1回を認識した瞬間にロック
-   */
-  scanLocked = true;
+    await scanner.start(
+      source,
+      {
+        fps:10,
+        qrbox:(w,h)=>({
+          width:Math.floor(w*.92),
+          height:Math.max(100,Math.min(150,Math.floor(h*.32)))
+        }),
+        disableFlip:false
+      },
+      onScan,
+      ()=>{}
+    );
 
-  lastJan = jan;
+    cameraRunning=true;
+    button.disabled=false;
+    button.textContent="カメラを停止";
 
-
-  if (navigator.vibrate) {
-    navigator.vibrate(120);
-  }
-
-
-  /*
-   * 連続読取を防ぐため
-   * すぐカメラを停止
-   */
-  if (
-    scanner &&
-    cameraRunning
-  ) {
-
-    try {
-
-      await scanner.stop();
-
-      await scanner.clear();
-
-    } catch (error) {
-
-      console.error(error);
-
+    if(typeof source==="string"){
+      localStorage.setItem(CAMERA_KEY,source);
+      el("cameraSelect").value=source;
     }
 
+    setupZoomCapability();
+    message.textContent="JANバーコード全体を枠内に合わせてください。iPhone SE2などは25〜35cm離してお試しください。";
+
+  }catch(error){
+    console.error(error);
+    scanner=null;
+    cameraRunning=false;
+    videoTrack=null;
+    button.disabled=false;
+    button.textContent="バーコードで商品を追加";
+    reader.style.display="none";
+    el("zoomControls").style.display="none";
+    message.textContent="カメラを開始できませんでした。\n"+(error.message||String(error));
   }
-
-
-  scanner = null;
-
-  cameraRunning = false;
-
-
-  el("reader")
-    .style.display =
-    "none";
-
-
-  el("cameraBtn")
-    .disabled =
-    false;
-
-
-  el("cameraBtn")
-    .textContent =
-    "次の商品を読み取る";
-
-
-  el("cameraMessage")
-    .textContent =
-    "✓ JANを読み取りました：" +
-    jan +
-    "\n商品情報を確認しています...";
-
-
-  /*
-   * GASへJAN検索
-   */
-  jsonp(
-
-    {
-      action: "jan",
-      jan: jan
-    },
-
-    function(data) {
-
-      if (
-        data &&
-        data.found &&
-        data.product
-      ) {
-
-        /*
-         * 1回だけ見積へ追加
-         */
-        addProduct(
-          data.product
-        );
-
-
-        el("cameraMessage")
-          .textContent =
-          "✓ 読み取りました\n" +
-          data.product.name +
-          "\n\n見積に1個追加しました。";
-
-
-        el("cameraBtn")
-          .textContent =
-          "次の商品を読み取る";
-
-      } else {
-
-        showMessage(
-          "商品が見つかりません。JAN：" +
-          jan,
-          true
-        );
-
-
-        el("cameraMessage")
-          .textContent =
-          "JANは読み取りましたが、商品マスターに登録されていません。";
-
-
-        el("cameraBtn")
-          .textContent =
-          "もう一度読み取る";
-
-      }
-
-
-      /*
-       * 次回の読み取りを許可
-       * カメラ自体は再起動しない
-       */
-      scanLocked = false;
-
-      lastJan = "";
-
-    },
-
-    function() {
-
-      showMessage(
-        "商品検索APIへ接続できませんでした。",
-        true
-      );
-
-
-      el("cameraMessage")
-        .textContent =
-        "JANは読み取りましたが、商品情報を取得できませんでした。";
-
-
-      el("cameraBtn")
-        .textContent =
-        "もう一度読み取る";
-
-
-      scanLocked = false;
-
-      lastJan = "";
-
-    }
-
-  );
-
 }
-function fillCameras(){el("cameraSelect").innerHTML=cameras.map((c,i)=>`<option value="${escapeHtml(c.id)}">カメラ ${i+1}${c.label?"："+escapeHtml(c.label):""}</option>`).join("")}async function changeCamera(){const id=el("cameraSelect").value;if(!id)return;localStorage.setItem(CAMERA_KEY,id);await stopCamera(false);await startCamera(id)}async function resetCamera(){localStorage.removeItem(CAMERA_KEY);await stopCamera(false);await startCamera()}function toggleCameraSettings(){el("cameraSettings").style.display=el("cameraSettings").style.display==="block"?"none":"block"}async function stopCamera(show=true){if(scanner&&cameraRunning){try{await scanner.stop();await scanner.clear()}catch(e){}}scanner=null;cameraRunning=false;el("reader").style.display="none";el("cameraBtn").disabled=false;el("cameraBtn").textContent="バーコードで商品を追加";if(show)el("cameraMessage").textContent="カメラを停止しました。"}
+
+function setupZoomCapability(){
+  videoTrack=null;
+  el("zoomControls").style.display="none";
+  try{
+    const video=document.querySelector("#reader video");
+    if(!video||!video.srcObject)return;
+    const tracks=video.srcObject.getVideoTracks();
+    if(!tracks.length)return;
+    videoTrack=tracks[0];
+    const capabilities=videoTrack.getCapabilities?videoTrack.getCapabilities():{};
+    if(!capabilities.zoom)return;
+    zoomMin=Number(capabilities.zoom.min||1);
+    zoomMax=Number(capabilities.zoom.max||zoomMin);
+    zoomStep=Number(capabilities.zoom.step||.1);
+    const settings=videoTrack.getSettings?videoTrack.getSettings():{};
+    currentZoom=Number(settings.zoom||zoomMin);
+    updateZoomDisplay();
+    el("zoomControls").style.display="block";
+  }catch(error){
+    console.log("Zoom not supported",error);
+    videoTrack=null;
+    el("zoomControls").style.display="none";
+  }
+}
+
+async function changeZoom(direction){
+  if(!videoTrack)return;
+  const next=Math.max(zoomMin,Math.min(zoomMax,currentZoom+zoomStep*direction));
+  try{
+    await videoTrack.applyConstraints({advanced:[{zoom:next}]});
+    currentZoom=next;
+    updateZoomDisplay();
+  }catch(error){
+    console.log("Zoom change failed",error);
+  }
+}
+
+function updateZoomDisplay(){
+  el("zoomValue").textContent=Number(currentZoom).toFixed(1)+"×";
+}
+
+async function onScan(decodedText){
+  if(scanLocked)return;
+  const jan=normalizeJan(decodedText);
+  if(!jan)return;
+
+  scanLocked=true;
+  lastJan=jan;
+  if(navigator.vibrate)navigator.vibrate(120);
+
+  /* 連続追加防止：1回読んだ時点でカメラを停止 */
+  if(scanner&&cameraRunning){
+    try{
+      await scanner.stop();
+      await scanner.clear();
+    }catch(error){
+      console.error(error);
+    }
+  }
+
+  scanner=null;
+  cameraRunning=false;
+  videoTrack=null;
+  el("zoomControls").style.display="none";
+  el("reader").style.display="none";
+  el("cameraBtn").disabled=false;
+  el("cameraBtn").textContent="次の商品を読み取る";
+  el("cameraMessage").textContent="✓ JANを読み取りました："+jan+"\n商品情報を確認しています...";
+
+  jsonp(
+    {action:"jan",jan:jan},
+    data=>{
+      if(data&&data.found&&data.product){
+        addProduct(data.product);
+        el("cameraMessage").textContent="✓ 読み取りました\n"+data.product.name+"\n\n見積に1個追加しました。";
+        el("cameraBtn").textContent="次の商品を読み取る";
+      }else{
+        showMessage("商品が見つかりません。JAN："+jan,true);
+        el("cameraMessage").textContent="JANは読み取りましたが、商品マスターに登録されていません。";
+        el("cameraBtn").textContent="もう一度読み取る";
+      }
+      scanLocked=false;
+      lastJan="";
+    },
+    ()=>{
+      showMessage("商品検索APIへ接続できませんでした。",true);
+      el("cameraMessage").textContent="JANは読み取りましたが、商品情報を取得できませんでした。";
+      el("cameraBtn").textContent="もう一度読み取る";
+      scanLocked=false;
+      lastJan="";
+    }
+  );
+}
+
+function fillCameras(){el("cameraSelect").innerHTML=cameras.map((c,i)=>`<option value="${escapeHtml(c.id)}">カメラ ${i+1}${c.label?"："+escapeHtml(c.label):""}</option>`).join("")}async function changeCamera(){const id=el("cameraSelect").value;if(!id)return;localStorage.setItem(CAMERA_KEY,id);await stopCamera(false);await startCamera(id)}async function resetCamera(){localStorage.removeItem(CAMERA_KEY);await stopCamera(false);await startCamera()}function toggleCameraSettings(){el("cameraSettings").style.display=el("cameraSettings").style.display==="block"?"none":"block"}async function stopCamera(show=true){
+  if(scanner&&cameraRunning){
+    try{
+      await scanner.stop();
+      await scanner.clear();
+    }catch(error){
+      console.error(error);
+    }
+  }
+  scanner=null;
+  cameraRunning=false;
+  videoTrack=null;
+  el("zoomControls").style.display="none";
+  el("reader").style.display="none";
+  el("cameraBtn").disabled=false;
+  el("cameraBtn").textContent="バーコードで商品を追加";
+  if(show)el("cameraMessage").textContent="カメラを停止しました。";
+}
 function formatPdfDate(v){if(!v)return"-";const p=v.split("-");return p.length===3?`${p[0]}年${Number(p[1])}月${Number(p[2])}日`:v}function initializePdfDate(){const d=new Date(),local=new Date(d.getTime()-d.getTimezoneOffset()*60000);el("pdfEstimateDate").value=local.toISOString().slice(0,10)}
 function createEstimatePdf(){if(!estimateItems.size){alert("見積商品を追加してください。");return}const customer=el("pdfCustomerName").value.trim();if(!customer){alert("見積先名を入力してください。");return}let sub=0;el("pdfItemRows").innerHTML=[...estimateItems.values()].map((x,i)=>{const p=x.product,u=getPrice(p),a=u*x.quantity;sub+=a;return `<tr><td class="center">${i+1}</td><td>${escapeHtml(p.productCode||"-")}</td><td>${escapeHtml(p.name||"")}</td><td class="center">${x.quantity}</td><td class="right">${formatPrice(u)}</td><td class="right">${formatPrice(a)}</td></tr>`}).join("");const tax=Math.floor(sub*TAX_RATE),total=sub+tax,issuer=el("pdfIssuerName").value.trim();el("pdfCustomerDisplay").textContent=customer;el("pdfIssuerDisplay").textContent=issuer?"発行元："+issuer:"";el("pdfDateDisplay").textContent="見積日："+formatPdfDate(el("pdfEstimateDate").value);el("pdfValidityDisplay").textContent=el("pdfValidity").value.trim()||"-";el("pdfNoteDisplay").textContent=el("pdfNote").value.trim()||"-";el("pdfSubtotal").textContent=formatPrice(sub);el("pdfTax").textContent=formatPrice(tax);el("pdfTotal").textContent=el("pdfGrandTotal").textContent=formatPrice(total);el("pdfMessage").textContent="印刷プレビューから共有を開き『ファイルに保存』を選択してください。";requestAnimationFrame(()=>requestAnimationFrame(()=>window.print()))}
 el("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")searchProducts()});document.addEventListener("visibilitychange",()=>{if(document.hidden&&cameraRunning)stopCamera(false)});initializePdfDate();renderEstimate();
