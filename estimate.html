@@ -39,7 +39,179 @@ function changeQty(k,d){const x=estimateItems.get(k);if(!x)return;x.quantity=Mat
 function renderEstimate(){el("empty").style.display=estimateItems.size?"none":"block";el("items").innerHTML=[...estimateItems].map(([k,x])=>{const p=x.product,u=getPrice(p),sub=u*x.quantity,s=safeJs(k);return `<div class="item"><div class="item-top"><div><div class="maker">${escapeHtml(p.maker||"")}</div><div class="name">${escapeHtml(p.name||"")}</div><div class="meta">品番：${escapeHtml(p.productCode||"-")}<br>${p.manual?"自由入力商品":"JAN："+escapeHtml(p.jan||"-")}</div></div><button class="remove" onclick="removeItem('${s}')">削除</button></div><div class="price-line"><span>${priceLabel()}</span><strong class="unit">${formatPrice(u)}</strong></div><div class="qty"><button onclick="changeQty('${s}',-1)">−</button><input type="number" min="1" value="${x.quantity}" onchange="setQty('${s}',this.value)"><button onclick="changeQty('${s}',1)">＋</button></div><div class="subtotal"><span>小計</span><strong>${formatPrice(sub)}</strong></div></div>`}).join("");let qty=0,sub=0;estimateItems.forEach(x=>{qty+=x.quantity;sub+=getPrice(x.product)*x.quantity});const tax=Math.floor(sub*TAX_RATE);el("itemCount").textContent=estimateItems.size+"商品";el("countSummary").textContent=`${estimateItems.size}点 / ${qty}個`;el("subtotalSummary").textContent=formatPrice(sub);el("taxSummary").textContent=formatPrice(tax);el("totalSummary").textContent=formatPrice(sub+tax)}
 async function toggleCamera(){cameraRunning?await stopCamera():await startCamera()}
 async function startCamera(cameraId=""){const b=el("cameraBtn"),reader=el("reader"),msg=el("cameraMessage");b.disabled=true;b.textContent="カメラを準備しています...";reader.style.display="block";try{scanner=new Html5Qrcode("reader",{formatsToSupport:[Html5QrcodeSupportedFormats.EAN_13,Html5QrcodeSupportedFormats.EAN_8,Html5QrcodeSupportedFormats.UPC_A,Html5QrcodeSupportedFormats.UPC_E,Html5QrcodeSupportedFormats.CODE_128],verbose:false});cameras=await Html5Qrcode.getCameras();if(!cameras.length)throw new Error("利用可能なカメラがありません");fillCameras();const saved=localStorage.getItem(CAMERA_KEY),source=cameraId&&cameras.some(c=>c.id===cameraId)?cameraId:saved&&cameras.some(c=>c.id===saved)?saved:{facingMode:"environment"};await scanner.start(source,{fps:10,qrbox:(w,h)=>({width:Math.floor(w*.92),height:Math.max(100,Math.min(150,Math.floor(h*.32)))}),disableFlip:false},onScan,()=>{});cameraRunning=true;b.disabled=false;b.textContent="カメラを停止";if(typeof source==="string"){localStorage.setItem(CAMERA_KEY,source);el("cameraSelect").value=source}msg.textContent="JANバーコード全体を枠内に合わせ、15〜25cm離してください。"}catch(e){scanner=null;cameraRunning=false;b.disabled=false;b.textContent="バーコードで商品を追加";reader.style.display="none";msg.textContent="カメラを開始できませんでした。\n"+(e.message||e)}}
-function onScan(text){if(scanLocked)return;const jan=normalizeJan(text);if(!jan||jan===lastJan)return;scanLocked=true;lastJan=jan;navigator.vibrate?.(100);el("cameraMessage").textContent="JANを読み取りました："+jan+"\n検索しています...";jsonp({action:"jan",jan},data=>{if(data?.found&&data.product){addProduct(data.product);el("cameraMessage").textContent="見積に追加しました："+data.product.name}else{showMessage("商品が見つかりません。JAN："+jan,true);el("cameraMessage").textContent="JANは読み取りましたが商品が見つかりません。"}},()=>showMessage("商品検索APIへ接続できませんでした。",true));setTimeout(()=>{scanLocked=false;lastJan=""},1500)}
+async function onScan(text) {
+
+  if (scanLocked) {
+    return;
+  }
+
+  const jan =
+    normalizeJan(text);
+
+  if (!jan) {
+    return;
+  }
+
+
+  /*
+   * 最初の1回を認識した瞬間にロック
+   */
+  scanLocked = true;
+
+  lastJan = jan;
+
+
+  if (navigator.vibrate) {
+    navigator.vibrate(120);
+  }
+
+
+  /*
+   * 連続読取を防ぐため
+   * すぐカメラを停止
+   */
+  if (
+    scanner &&
+    cameraRunning
+  ) {
+
+    try {
+
+      await scanner.stop();
+
+      await scanner.clear();
+
+    } catch (error) {
+
+      console.error(error);
+
+    }
+
+  }
+
+
+  scanner = null;
+
+  cameraRunning = false;
+
+
+  el("reader")
+    .style.display =
+    "none";
+
+
+  el("cameraBtn")
+    .disabled =
+    false;
+
+
+  el("cameraBtn")
+    .textContent =
+    "次の商品を読み取る";
+
+
+  el("cameraMessage")
+    .textContent =
+    "✓ JANを読み取りました：" +
+    jan +
+    "\n商品情報を確認しています...";
+
+
+  /*
+   * GASへJAN検索
+   */
+  jsonp(
+
+    {
+      action: "jan",
+      jan: jan
+    },
+
+    function(data) {
+
+      if (
+        data &&
+        data.found &&
+        data.product
+      ) {
+
+        /*
+         * 1回だけ見積へ追加
+         */
+        addProduct(
+          data.product
+        );
+
+
+        el("cameraMessage")
+          .textContent =
+          "✓ 読み取りました\n" +
+          data.product.name +
+          "\n\n見積に1個追加しました。";
+
+
+        el("cameraBtn")
+          .textContent =
+          "次の商品を読み取る";
+
+      } else {
+
+        showMessage(
+          "商品が見つかりません。JAN：" +
+          jan,
+          true
+        );
+
+
+        el("cameraMessage")
+          .textContent =
+          "JANは読み取りましたが、商品マスターに登録されていません。";
+
+
+        el("cameraBtn")
+          .textContent =
+          "もう一度読み取る";
+
+      }
+
+
+      /*
+       * 次回の読み取りを許可
+       * カメラ自体は再起動しない
+       */
+      scanLocked = false;
+
+      lastJan = "";
+
+    },
+
+    function() {
+
+      showMessage(
+        "商品検索APIへ接続できませんでした。",
+        true
+      );
+
+
+      el("cameraMessage")
+        .textContent =
+        "JANは読み取りましたが、商品情報を取得できませんでした。";
+
+
+      el("cameraBtn")
+        .textContent =
+        "もう一度読み取る";
+
+
+      scanLocked = false;
+
+      lastJan = "";
+
+    }
+
+  );
+
+}
 function fillCameras(){el("cameraSelect").innerHTML=cameras.map((c,i)=>`<option value="${escapeHtml(c.id)}">カメラ ${i+1}${c.label?"："+escapeHtml(c.label):""}</option>`).join("")}async function changeCamera(){const id=el("cameraSelect").value;if(!id)return;localStorage.setItem(CAMERA_KEY,id);await stopCamera(false);await startCamera(id)}async function resetCamera(){localStorage.removeItem(CAMERA_KEY);await stopCamera(false);await startCamera()}function toggleCameraSettings(){el("cameraSettings").style.display=el("cameraSettings").style.display==="block"?"none":"block"}async function stopCamera(show=true){if(scanner&&cameraRunning){try{await scanner.stop();await scanner.clear()}catch(e){}}scanner=null;cameraRunning=false;el("reader").style.display="none";el("cameraBtn").disabled=false;el("cameraBtn").textContent="バーコードで商品を追加";if(show)el("cameraMessage").textContent="カメラを停止しました。"}
 function formatPdfDate(v){if(!v)return"-";const p=v.split("-");return p.length===3?`${p[0]}年${Number(p[1])}月${Number(p[2])}日`:v}function initializePdfDate(){const d=new Date(),local=new Date(d.getTime()-d.getTimezoneOffset()*60000);el("pdfEstimateDate").value=local.toISOString().slice(0,10)}
 function createEstimatePdf(){if(!estimateItems.size){alert("見積商品を追加してください。");return}const customer=el("pdfCustomerName").value.trim();if(!customer){alert("見積先名を入力してください。");return}let sub=0;el("pdfItemRows").innerHTML=[...estimateItems.values()].map((x,i)=>{const p=x.product,u=getPrice(p),a=u*x.quantity;sub+=a;return `<tr><td class="center">${i+1}</td><td>${escapeHtml(p.productCode||"-")}</td><td>${escapeHtml(p.name||"")}</td><td class="center">${x.quantity}</td><td class="right">${formatPrice(u)}</td><td class="right">${formatPrice(a)}</td></tr>`}).join("");const tax=Math.floor(sub*TAX_RATE),total=sub+tax,issuer=el("pdfIssuerName").value.trim();el("pdfCustomerDisplay").textContent=customer;el("pdfIssuerDisplay").textContent=issuer?"発行元："+issuer:"";el("pdfDateDisplay").textContent="見積日："+formatPdfDate(el("pdfEstimateDate").value);el("pdfValidityDisplay").textContent=el("pdfValidity").value.trim()||"-";el("pdfNoteDisplay").textContent=el("pdfNote").value.trim()||"-";el("pdfSubtotal").textContent=formatPrice(sub);el("pdfTax").textContent=formatPrice(tax);el("pdfTotal").textContent=el("pdfGrandTotal").textContent=formatPrice(total);el("pdfMessage").textContent="印刷プレビューから共有を開き『ファイルに保存』を選択してください。";requestAnimationFrame(()=>requestAnimationFrame(()=>window.print()))}
