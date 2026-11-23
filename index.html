@@ -424,6 +424,32 @@ select {
         margin-top: 8px;
       }
     }
+    .guideLink {
+  display: block;
+
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 13px;
+
+  border: 1px solid #475569;
+  border-radius: 12px;
+
+  background: #1e293b;
+  color: #cbd5e1;
+
+  text-align: center;
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  touch-action: manipulation;
+}
+
+.guideLink:active {
+  transform: scale(0.98);
+  background: #334155;
+}
   </style>
 </head>
 
@@ -443,7 +469,12 @@ select {
   >
     🧾 見積を作成する
   </a>
-
+<a
+  href="./guide.html"
+  class="guideLink"
+>
+  ？ 使い方・仕様を見る
+</a>
   <button
     id="cameraButton"
     class="cameraButton"
