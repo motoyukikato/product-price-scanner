@@ -19,24 +19,57 @@
 
   html,
   body {
-    margin: 0 !important;
-    padding: 0 !important;
-
     width: 100% !important;
     height: auto !important;
 
+    margin: 0 !important;
+    padding: 0 !important;
+
     background: #ffffff !important;
+    color: #111827 !important;
+
     overflow: visible !important;
   }
 
-  body > * {
+  /*
+   * 親のcontainerは消さない
+   */
+  .container {
+    display: block !important;
+
+    width: 100% !important;
+    max-width: none !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    background: #ffffff !important;
+  }
+
+  /*
+   * container内では見積書以外を消す
+   */
+  .container > *:not(#pdfDocument) {
     display: none !important;
   }
 
+  /*
+   * 画面下部の合計欄を消す
+   */
+  .summary {
+    display: none !important;
+  }
+
+  /*
+   * 見積書本体だけを印刷
+   */
   #pdfDocument {
     display: block !important;
 
     position: static !important;
+
+    left: auto !important;
+    top: auto !important;
 
     width: 100% !important;
 
@@ -50,11 +83,16 @@
     color: #111827 !important;
 
     visibility: visible !important;
+    opacity: 1 !important;
+
     overflow: visible !important;
+
+    z-index: auto !important;
   }
 
   #pdfDocument * {
     visibility: visible !important;
+    opacity: 1 !important;
   }
 
   .pdfTable {
@@ -62,11 +100,17 @@
     border-collapse: collapse !important;
   }
 
+  /*
+   * 商品1行をページ途中で分割しない
+   */
   .pdfTable tr {
     break-inside: avoid !important;
     page-break-inside: avoid !important;
   }
 
+  /*
+   * 合計欄・備考欄を途中で分割しない
+   */
   .pdfSummary,
   .pdfInfo {
     break-inside: avoid !important;
